@@ -176,10 +176,10 @@ public class Imagenes {
 	 * @return the pixel matrix
 	 */
 	public static int[][] getPixelMatrix(BufferedImage image){
-		int [][] pixels = new int[image.getHeight()][image.getWidth()];
+		int [][] pixels = new int[image.getWidth()][image.getHeight()];
 		
-		for (int i = 0; i < pixels.length; i++) {
-			for (int j = 0; j < pixels[i].length; j++) {
+		for (int i = 0; i < image.getWidth(); i++) {
+			for (int j = 0; j < image.getHeight(); j++) {
 				pixels[i][j] = image.getRGB(i, j);
 			}
 		}

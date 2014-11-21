@@ -79,7 +79,7 @@ public class Controlador {
 		this.interfazGrafica
 				.addListenerAccionDiferenciaImagenes(new AccionDiferenciaImagenesListener());
 		this.interfazGrafica
-			.addListenerAccionDigitalizacion(new AccionDigitalizacionListener());
+				.addListenerAccionDigitalizacion(new AccionDigitalizacionListener());
 		this.interfazGrafica.addListenerAccionROI(new AccionROIListener());
 		this.interfazGrafica
 				.addListenerAccionEntropia(new AccionEntropiaListener());
@@ -91,7 +91,10 @@ public class Controlador {
 				.addListenerAccionAcercaDe(new AccionAcercaDeListener());
 		this.interfazGrafica.addListenerAccionTFT(new AccionTFTListener());
 		this.interfazGrafica.addListenerAccionSalir(new AccionSalirListener());
-		this.interfazGrafica.addListenerAccionPerfil(new AccionPerfilListener());
+		this.interfazGrafica
+				.addListenerAccionPerfil(new AccionPerfilListener());
+		this.interfazGrafica
+				.addListenerAccionEspejoVertical(new AccionEspejoVerticalListener());
 	}
 
 	/**
@@ -624,8 +627,9 @@ public class Controlador {
 						manipulador.setImagen_actual(imagenActual);
 
 						manipulador.diferenciaDeImagenes(nuevaImagen,
-								manipulador.diferenciaImagenesLUT(nuevaSeleccion
-										.getUmbral()));
+								manipulador
+										.diferenciaImagenesLUT(nuevaSeleccion
+												.getUmbral()));
 
 						PintarImagen nuevaPintura = new PintarImagen(
 								manipulador);
@@ -639,33 +643,38 @@ public class Controlador {
 	}
 
 	/**
-	 * The listener interface for receiving accionDigitalizacion events.
-	 * The class that is interested in processing a accionDigitalizacion
-	 * event implements this interface, and the object created
-	 * with that class is registered with a component using the
-	 * component's <code>addAccionDigitalizacionListener<code> method. When
+	 * The listener interface for receiving accionDigitalizacion events. The
+	 * class that is interested in processing a accionDigitalizacion event
+	 * implements this interface, and the object created with that class is
+	 * registered with a component using the component's
+	 * <code>addAccionDigitalizacionListener<code> method. When
 	 * the accionDigitalizacion event occurs, that object's appropriate
 	 * method is invoked.
-	 *
+	 * 
 	 * @see AccionDigitalizacionEvent
 	 */
 	public class AccionDigitalizacionListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
+		 * )
 		 */
 		public void actionPerformed(ActionEvent arg0) {
 			SeleccionDigitalizacion seleccionDigital = new SeleccionDigitalizacion();
-			
+
 			manipulador.digitalizar(seleccionDigital.getMuestreo_1(),
-					seleccionDigital.getMuestreo_2(), seleccionDigital.getCuantizacion());
-			
+					seleccionDigital.getMuestreo_2(),
+					seleccionDigital.getCuantizacion());
+
 			PintarImagen nuevaPintura = new PintarImagen(manipulador);
 			nuevaPintura.addWindowListenerFrame(new WindowActiveListener(
 					manipulador));
 		}
 	}
-	
+
 	/**
 	 * The listener interface for receiving accionEntropia events. The class
 	 * that is interested in processing a accionEntropia event implements this
@@ -726,25 +735,24 @@ public class Controlador {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			setContrasteBrillo(new ContrasteBrillo(manipulador
-					.getAcumulador_imagenes()
-					.get(manipulador.getImagen_actual())));
-			
+					.getAcumulador_imagenes().get(
+							manipulador.getImagen_actual())));
+
 			Imagenes imagen = null;
 			imagen = new Imagenes();
 
 			imagen.setImagen(contrasteBrillo.getImagen_resultado());
 			manipulador.crearImagen(imagen);
-			
+
 			PintarImagen nuevaPintura = new PintarImagen(manipulador);
 			nuevaPintura.addWindowListenerFrame(new WindowActiveListener(
 					manipulador));
-			
-			
+
 		}
 
 		/**
 		 * Gets the contraste brillo.
-		 *
+		 * 
 		 * @return the contraste brillo
 		 */
 		public ContrasteBrillo getContrasteBrillo() {
@@ -753,8 +761,9 @@ public class Controlador {
 
 		/**
 		 * Sets the contraste brillo.
-		 *
-		 * @param contrasteBrillo the new contraste brillo
+		 * 
+		 * @param contrasteBrillo
+		 *            the new contraste brillo
 		 */
 		public void setContrasteBrillo(ContrasteBrillo contrasteBrillo) {
 			this.contrasteBrillo = contrasteBrillo;
@@ -775,8 +784,12 @@ public class Controlador {
 	 */
 	public class AccionBinarizarListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
+		 * )
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -801,20 +814,24 @@ public class Controlador {
 	}
 
 	/**
-	 * The listener interface for receiving accionAcercaDe events.
-	 * The class that is interested in processing a accionAcercaDe
-	 * event implements this interface, and the object created
-	 * with that class is registered with a component using the
-	 * component's <code>addAccionAcercaDeListener<code> method. When
+	 * The listener interface for receiving accionAcercaDe events. The class
+	 * that is interested in processing a accionAcercaDe event implements this
+	 * interface, and the object created with that class is registered with a
+	 * component using the component's
+	 * <code>addAccionAcercaDeListener<code> method. When
 	 * the accionAcercaDe event occurs, that object's appropriate
 	 * method is invoked.
-	 *
+	 * 
 	 * @see AccionAcercaDeEvent
 	 */
 	public class AccionAcercaDeListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
+		 * )
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -826,20 +843,23 @@ public class Controlador {
 	}
 
 	/**
-	 * The listener interface for receiving accionTFT events.
-	 * The class that is interested in processing a accionTFT
-	 * event implements this interface, and the object created
-	 * with that class is registered with a component using the
-	 * component's <code>addAccionTFTListener<code> method. When
+	 * The listener interface for receiving accionTFT events. The class that is
+	 * interested in processing a accionTFT event implements this interface, and
+	 * the object created with that class is registered with a component using
+	 * the component's <code>addAccionTFTListener<code> method. When
 	 * the accionTFT event occurs, that object's appropriate
 	 * method is invoked.
-	 *
+	 * 
 	 * @see AccionTFTEvent
 	 */
 	public class AccionTFTListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
+		 * )
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
@@ -850,10 +870,10 @@ public class Controlador {
 					manipulador.getAcumulador_imagenes()
 							.get(manipulador.getImagen_actual()).getImagen(),
 					pedir_numeros.getNum_puntos());
-			
+
 			Imagenes imagen_resultado = new Imagenes();
 			imagen_resultado.setImagen(sTramos.getImagen_transformada());
-			
+
 			manipulador.crearImagen(imagen_resultado);
 			PintarImagen nueva_pintura = new PintarImagen(manipulador);
 			nueva_pintura.addWindowListenerFrame(new WindowActiveListener(
@@ -861,53 +881,78 @@ public class Controlador {
 		}
 
 	}
-	
+
 	/**
-	 * The listener interface for receiving accionSalir events.
-	 * The class that is interested in processing a accionSalir
-	 * event implements this interface, and the object created
-	 * with that class is registered with a component using the
-	 * component's <code>addAccionSalirListener<code> method. When
+	 * The listener interface for receiving accionSalir events. The class that
+	 * is interested in processing a accionSalir event implements this
+	 * interface, and the object created with that class is registered with a
+	 * component using the component's
+	 * <code>addAccionSalirListener<code> method. When
 	 * the accionSalir event occurs, that object's appropriate
 	 * method is invoked.
-	 *
+	 * 
 	 * @see AccionSalirEvent
 	 */
-	public class AccionSalirListener implements ActionListener  {
+	public class AccionSalirListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
+		 * )
 		 */
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
 			System.exit(0);
 		}
-		
+
 	}
-	
-	
+
 	/**
-	 * The listener interface for receiving accionPerfil events.
-	 * The class that is interested in processing a accionPerfil
-	 * event implements this interface, and the object created
-	 * with that class is registered with a component using the
-	 * component's <code>addAccionPerfilListener<code> method. When
+	 * The listener interface for receiving accionPerfil events. The class that
+	 * is interested in processing a accionPerfil event implements this
+	 * interface, and the object created with that class is registered with a
+	 * component using the component's
+	 * <code>addAccionPerfilListener<code> method. When
 	 * the accionPerfil event occurs, that object's appropriate
 	 * method is invoked.
-	 *
+	 * 
 	 * @see AccionPerfilEvent
 	 */
-	public class AccionPerfilListener implements ActionListener  {
+	public class AccionPerfilListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
+		 * )
 		 */
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
-			Perfil perfil = new Perfil(manipulador.getAcumulador_imagenes().get(manipulador.getImagen_actual()).getImagen());
+			Perfil perfil = new Perfil(manipulador.getAcumulador_imagenes()
+					.get(manipulador.getImagen_actual()).getImagen());
 		}
-		
+
+	}
+
+	public class AccionEspejoVerticalListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			Imagenes imagen_espejo = new Imagenes();
+			imagen_espejo.setImagen(manipulador.espejoVertical(manipulador
+					.getAcumulador_imagenes()
+					.get(manipulador.getImagen_actual()).getImagen()));
+			manipulador.crearImagen(imagen_espejo);
+			PintarImagen nueva_pintura = new PintarImagen(manipulador);
+			nueva_pintura.addWindowListenerFrame(new WindowActiveListener(
+					manipulador));
+		}
+
 	}
 }
