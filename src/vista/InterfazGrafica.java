@@ -438,4 +438,14 @@ public class InterfazGrafica {
 	public void addListenerAccionPerfil(ActionListener ListenForPerfil) {
 		accion_herramientas_perfil.addActionListener(ListenForPerfil);
 	}
+	
+	/**
+	 * Adds the listener accion espejo vertical.
+	 *
+	 * @param ListenForEspejoVertical the listen for espejo vertical
+	 */
+	public void addListenerAccionEspejoVertical(ActionListener ListenForEspejoVertical) {
+		accion_herramientas_espejo_vertical.addActionListener(ListenForEspejoVertical);
+	}
+
 }
