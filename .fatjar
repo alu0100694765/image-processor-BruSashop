@@ -1,0 +1,14 @@
+#Fat Jar Configuration File
+#Mon Nov 10 00:12:53 GMT 2014
+onejar.license.required=true
+manifest.classpath=
+manifest.removesigners=true
+onejar.checkbox=false
+jarname=BruSashop.jar
+manifest.mergeall=true
+manifest.mainclass=AppBrusashop
+manifest.file=<createnew>
+jarname.isextern=false
+onejar.expand=
+excludes=<jar|jmathplot.jar>
+includes=
