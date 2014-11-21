@@ -101,6 +101,9 @@ public class InterfazGrafica {
 	/** The Constant ACERCA_DE_MENSAJE. */
 	public final static String ACERCA_DE_MENSAJE = "<html>BruSashop<br>Versi�n: 1.0<br>Autores: Sawan J Kapai Harpalani & Bruno Alessio Bibb�<br>Asignatura: Visi�n por Computador.<br>Grado en Ingener�a Inform�tica, Universidad La Laguna</html>";
 	
+	/** The Constant ESPEJO_V. */
+	public final static String ESPEJO_V = "Espejo vertical";
+	
 	/** The frame. */
 	public JFrame frame;
 
@@ -173,6 +176,9 @@ public class InterfazGrafica {
 	/** The accion_herramientas_perfil. */
 	public JMenuItem accion_herramientas_perfil;
 	
+	/** The accion_herramientas_espejo_vertical. */
+	public JMenuItem accion_herramientas_espejo_vertical;
+	
 	/**
 	 * Instantiates a new interfaz grafica.
 	 */
@@ -214,6 +220,7 @@ public class InterfazGrafica {
 		acciones_herramientas_binarizar =  new JMenuItem(BINARIZAR);
 		acciones_herramientas_tft = new JMenuItem(TFT);
 		accion_herramientas_perfil = new JMenuItem(PERFIL);
+		accion_herramientas_espejo_vertical = new JMenuItem(ESPEJO_V);
 		
 		//Añadiendo atajos
 		acciones_archivo_abrir.setMnemonic(OPEN_FILE);
@@ -243,6 +250,7 @@ public class InterfazGrafica {
 		menu_herramientas.add(acciones_herramientas_binarizar);
 		menu_herramientas.add(acciones_herramientas_tft);
 		menu_herramientas.add(accion_herramientas_perfil);
+		menu_herramientas.add(accion_herramientas_espejo_vertical);
 		menu_editar.add(acciones_editar_region_interes);
 		
 		
