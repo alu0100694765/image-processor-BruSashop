@@ -113,6 +113,8 @@ public class Imagenes {
 	 * Inicializar cero.
 	 * 
 	 * Inicializamos el elemento pasado por parametro a cero.
+	 *
+	 * @param elemento the elemento
 	 */
 	public void inicializarCero(int[] elemento) {
 		for (int i = 0; i < elemento.length; i++) {
@@ -167,6 +169,24 @@ public class Imagenes {
 		}
 	}
 
+	/**
+	 * Gets the pixel matrix.
+	 *
+	 * @param image the image
+	 * @return the pixel matrix
+	 */
+	public static int[][] getPixelMatrix(BufferedImage image){
+		int [][] pixels = new int[image.getHeight()][image.getWidth()];
+		
+		for (int i = 0; i < pixels.length; i++) {
+			for (int j = 0; j < pixels[i].length; j++) {
+				pixels[i][j] = image.getRGB(i, j);
+			}
+		}
+		
+		return pixels;
+	}
+	
 	/**
 	 * Clear data.
 	 * 
@@ -447,9 +467,11 @@ public class Imagenes {
 
 	/**
 	 * Sets the pixel grey.
-	 *
+	 * 
 	 * Se establecen todos los pixeles de la imagen
 	 * a gris segun la LUT que se ha proporcionado.
+	 *
+	 * @param LUT the new pixel grey
 	 */
 	public void setPixelGrey(int[] LUT) {
 		clearData();
@@ -464,6 +486,12 @@ public class Imagenes {
 		getData();
 	}
 	
+	/**
+	 * Sets the pixel grey.
+	 *
+	 * @param imagen the imagen
+	 * @param LUT the lut
+	 */
 	public static void setPixelGrey(BufferedImage imagen ,int[] LUT) {
 		int pixel = 0;
 		for (int i = 0; i < imagen.getWidth(); i++) {
@@ -475,6 +503,13 @@ public class Imagenes {
 		}
 	}
 	
+	/**
+	 * Sets the digitalizacion.
+	 *
+	 * @param muestreo_1 the muestreo_1
+	 * @param muestreo_2 the muestreo_2
+	 * @param LUT the lut
+	 */
 	public void setDigitalizacion(int muestreo_1, int muestreo_2, int [] LUT){
 		int i = 0;
 		int j = 0;
@@ -692,6 +727,14 @@ public class Imagenes {
 		return (0xff & (imagen.getRGB(x, y) >> 16));
 	}
 
+	/**
+	 * Gets the red point.
+	 *
+	 * @param imagen the imagen
+	 * @param x the x
+	 * @param y the y
+	 * @return the red point
+	 */
 	public static int getRedPoint(BufferedImage imagen ,int x, int y) {
 		return (0xff & (imagen.getRGB(x, y) >> 16));
 	}
@@ -765,6 +808,11 @@ public class Imagenes {
 		this.monocromo = monocromo;
 	}
 	
+	/**
+	 * Crear lut.
+	 *
+	 * @return the int[]
+	 */
 	public static int[] crearLUT() {
 		int[] LUT = new int[RANGO];
 		for (int i = 0; i < LUT.length; i++) {
