@@ -631,6 +631,36 @@ public class ManipuladorImagenes {
 		crearImagen(nuevaImagen);
 	}
 
+	public BufferedImage espejoVertical(BufferedImage image) {
+		BufferedImage image_result;
+		
+		int[][] matriz_imagen = Imagenes.getPixelMatrix(image);
+		
+		swapRows(matriz_imagen, matriz_imagen.length);
+		
+		image_result = Imagenes.deepCopy(Imagenes.crearImagenMatriz(matriz_imagen, image));
+		
+		return image_result;
+	}
+	
+	public static void swapRows(int[][] data, int rows) {
+		int start = 0;
+		int end = data.length - 1;
+		
+		int mitad = rows / 2;
+		
+		while ((start <= mitad) && (end >= mitad)) {
+			for (int value = 0; value < data[start].length; value++) {
+				int temp = data[start][value];
+				data[start][value] = data[end][value];
+				data[end][value] = temp;
+			}
+			start++;
+			end--;
+			
+		}	
+	}
+	
 	/**
 	 * Gets the acumulador_imagenes.
 	 * 

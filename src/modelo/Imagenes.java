@@ -821,4 +821,15 @@ public class Imagenes {
 		return LUT;
 	}
 
+	public static BufferedImage crearImagenMatriz(int [][] pixel, BufferedImage imagen_referencia) {
+		BufferedImage image_result = deepCopy(imagen_referencia);
+		
+		for (int i = 0; i < pixel.length; i++) {
+			for (int j = 0; j < pixel[i].length; j++) {
+				image_result.setRGB(i, j, pixel[i][j]);
+			}
+		}
+		return image_result;
+	}
+	
 }
