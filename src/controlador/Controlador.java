@@ -954,6 +954,9 @@ public class Controlador {
 	 */
 	public class AccionEspejoVerticalListener implements ActionListener {
 
+		/* (non-Javadoc)
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		 */
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
@@ -970,8 +973,22 @@ public class Controlador {
 		}
 	}
 	
+	/**
+	 * The listener interface for receiving accionEspejoHorizontal events.
+	 * The class that is interested in processing a accionEspejoHorizontal
+	 * event implements this interface, and the object created
+	 * with that class is registered with a component using the
+	 * component's <code>addAccionEspejoHorizontalListener<code> method. When
+	 * the accionEspejoHorizontal event occurs, that object's appropriate
+	 * method is invoked.
+	 *
+	 * @see AccionEspejoHorizontalEvent
+	 */
 	public class AccionEspejoHorizontalListener implements ActionListener {
 
+		/* (non-Javadoc)
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		 */
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
@@ -988,8 +1005,22 @@ public class Controlador {
 		}	
 	}
 	
+	/**
+	 * The listener interface for receiving accionTraspuestaImagen events.
+	 * The class that is interested in processing a accionTraspuestaImagen
+	 * event implements this interface, and the object created
+	 * with that class is registered with a component using the
+	 * component's <code>addAccionTraspuestaImagenListener<code> method. When
+	 * the accionTraspuestaImagen event occurs, that object's appropriate
+	 * method is invoked.
+	 *
+	 * @see AccionTraspuestaImagenEvent
+	 */
 	public class AccionTraspuestaImagenListener implements ActionListener {
 
+		/* (non-Javadoc)
+		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		 */
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
