@@ -95,6 +95,7 @@ public class Controlador {
 				.addListenerAccionPerfil(new AccionPerfilListener());
 		this.interfazGrafica
 				.addListenerAccionEspejoVertical(new AccionEspejoVerticalListener());
+		this.interfazGrafica.addListenerAccionEspejoHorizontal(new AccionEspejoHorizontalListener());
 	}
 
 	/**
@@ -959,11 +960,31 @@ public class Controlador {
 			imagen_espejo.setImagen(manipulador.espejoVertical(manipulador
 					.getAcumulador_imagenes()
 					.get(manipulador.getImagen_actual()).getImagen()));
+			
 			manipulador.crearImagen(imagen_espejo);
+			
 			PintarImagen nueva_pintura = new PintarImagen(manipulador);
 			nueva_pintura.addWindowListenerFrame(new WindowActiveListener(
 					manipulador));
 		}
-
 	}
+	
+	public class AccionEspejoHorizontalListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			Imagenes imagen_espejo = new Imagenes();
+			imagen_espejo.setImagen(manipulador.espejoHorizontal(manipulador
+					.getAcumulador_imagenes()
+					.get(manipulador.getImagen_actual()).getImagen()));
+			
+			manipulador.crearImagen(imagen_espejo);
+			
+			PintarImagen nueva_pintura = new PintarImagen(manipulador);
+			nueva_pintura.addWindowListenerFrame(new WindowActiveListener(
+					manipulador));
+		}	
+	}
+	
 }
