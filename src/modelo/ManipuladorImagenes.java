@@ -634,6 +634,9 @@ public class ManipuladorImagenes {
 	/**
 	 * Espejo vertical.
 	 * 
+	 * El espejo vertical se consigue realizando
+	 * un cambio de filas en la matriz de la imagen.
+	 * 
 	 * @param image
 	 *            the image
 	 * @return the buffered image
@@ -653,6 +656,9 @@ public class ManipuladorImagenes {
 
 	/**
 	 * Espejo horizontal.
+	 * 
+	 * El espejo horizontal se consigue realizando
+	 * un cambio de columnas en la matriz de la imagen.
 	 * 
 	 * @param image
 	 *            the image
@@ -694,7 +700,13 @@ public class ManipuladorImagenes {
 
 	/**
 	 * Rotacion.
-	 *
+	 * 
+	 * Se rota la imagen en funcion del angulo (90º, 180º, 270º)
+	 * Si el angulo es 90º: Basta con hallar la traspuesta de la matriz de la imagen.
+	 * Si el angulo es 180º: Basta con cambiar las columnas de la matriz de la imagen.
+	 * Si el angulo es 270º: Se ha de cambiar las columnas y posteriormente hallar la traspuesta
+	 * de esa matriz.
+	 * 
 	 * @param image the image
 	 * @param angulo the angulo
 	 * @return the buffered image
