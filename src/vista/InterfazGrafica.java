@@ -110,6 +110,9 @@ public class InterfazGrafica {
 	/** The Constant TRASPUESTA. */
 	public final static String TRASPUESTA = "Traspuesta de la imagen";
 	
+	/** The Constant ROTACION. */
+	public final static String ROTACION = "Rotacion";
+	
 	/** The frame. */
 	public JFrame frame;
 
@@ -191,6 +194,9 @@ public class InterfazGrafica {
 	/** The accion_herramientas_traspuesta_imagen. */
 	public JMenuItem accion_herramientas_traspuesta_imagen;
 	
+	/** The accion_herramientas_rotacion. */
+	public JMenuItem accion_herramientas_rotacion;
+	
 	/**
 	 * Instantiates a new interfaz grafica.
 	 */
@@ -235,7 +241,7 @@ public class InterfazGrafica {
 		accion_herramientas_espejo_vertical = new JMenuItem(ESPEJO_V);
 		accion_herramientas_espejo_horizontal = new JMenuItem(ESPEJO_H);
 		accion_herramientas_traspuesta_imagen = new JMenuItem(TRASPUESTA);
-		
+		accion_herramientas_rotacion = new JMenuItem(ROTACION);
 		
 		//Añadiendo atajos
 		acciones_archivo_abrir.setMnemonic(OPEN_FILE);
@@ -268,6 +274,7 @@ public class InterfazGrafica {
 		menu_herramientas.add(accion_herramientas_espejo_vertical);
 		menu_herramientas.add(accion_herramientas_espejo_horizontal);
 		menu_herramientas.add(accion_herramientas_traspuesta_imagen);
+		menu_herramientas.add(accion_herramientas_rotacion);
 		menu_editar.add(acciones_editar_region_interes);
 		
 		
