@@ -107,6 +107,9 @@ public class InterfazGrafica {
 	/** The Constant ESPEJO_H. */
 	public final static String ESPEJO_H = "Espejo horizontal";
 	
+	/** The Constant TRASPUESTA. */
+	public final static String TRASPUESTA = "Traspuesta de la imagen";
+	
 	/** The frame. */
 	public JFrame frame;
 
@@ -185,6 +188,9 @@ public class InterfazGrafica {
 	/** The accion_herramientas_espejo_horizontal. */
 	public JMenuItem accion_herramientas_espejo_horizontal;
 	
+	/** The accion_herramientas_traspuesta_imagen. */
+	public JMenuItem accion_herramientas_traspuesta_imagen;
+	
 	/**
 	 * Instantiates a new interfaz grafica.
 	 */
@@ -228,6 +234,8 @@ public class InterfazGrafica {
 		accion_herramientas_perfil = new JMenuItem(PERFIL);
 		accion_herramientas_espejo_vertical = new JMenuItem(ESPEJO_V);
 		accion_herramientas_espejo_horizontal = new JMenuItem(ESPEJO_H);
+		accion_herramientas_traspuesta_imagen = new JMenuItem(TRASPUESTA);
+		
 		
 		//Añadiendo atajos
 		acciones_archivo_abrir.setMnemonic(OPEN_FILE);
@@ -259,6 +267,7 @@ public class InterfazGrafica {
 		menu_herramientas.add(accion_herramientas_perfil);
 		menu_herramientas.add(accion_herramientas_espejo_vertical);
 		menu_herramientas.add(accion_herramientas_espejo_horizontal);
+		menu_herramientas.add(accion_herramientas_traspuesta_imagen);
 		menu_editar.add(acciones_editar_region_interes);
 		
 		
