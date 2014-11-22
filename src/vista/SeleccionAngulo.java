@@ -47,9 +47,9 @@ public class SeleccionAngulo {
 	}
 	
 	/**
-	 * Pedir umbral.
+	 * Pedir angulo.
 	 */
-	public void pedirUmbral(){
+	public void pedirAngulo(){
 		panel = new JPanel(new BorderLayout());
 
 		selectionLabel = new JLabel("Establezca un angulo");

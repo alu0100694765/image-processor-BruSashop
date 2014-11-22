@@ -1078,7 +1078,8 @@ public class Controlador {
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
 			SeleccionAngulo angulo = new SeleccionAngulo();
-
+			
+			
 			Imagenes imagen_rotacion = new Imagenes();
 			imagen_rotacion.setImagen(manipulador.rotacion(
 					manipulador.getAcumulador_imagenes()
