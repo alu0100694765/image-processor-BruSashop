@@ -474,6 +474,11 @@ public class InterfazGrafica {
 		accion_herramientas_espejo_horizontal.addActionListener(ListenForEspejoHorizontal);
 	}
 	
+	/**
+	 * Adds the listener accion traspuesta imagen.
+	 *
+	 * @param ListenForTraspuestaImagen the listen for traspuesta imagen
+	 */
 	public void addListenerAccionTraspuestaImagen(ActionListener ListenForTraspuestaImagen) {
 		accion_herramientas_traspuesta_imagen.addActionListener(ListenForTraspuestaImagen);
 	}
