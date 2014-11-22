@@ -28,6 +28,7 @@ import vista.NumeroTramos;
 import vista.Perfil;
 import vista.PintarImagen;
 import vista.PlotHistograma;
+import vista.SeleccionAngulo;
 import vista.SeleccionDigitalizacion;
 import vista.SeleccionGamma;
 import vista.SeleccionImagenEspecifica;
@@ -95,8 +96,12 @@ public class Controlador {
 				.addListenerAccionPerfil(new AccionPerfilListener());
 		this.interfazGrafica
 				.addListenerAccionEspejoVertical(new AccionEspejoVerticalListener());
-		this.interfazGrafica.addListenerAccionEspejoHorizontal(new AccionEspejoHorizontalListener());
-		this.interfazGrafica.addListenerAccionTraspuestaImagen(new AccionTraspuestaImagenListener());
+		this.interfazGrafica
+				.addListenerAccionEspejoHorizontal(new AccionEspejoHorizontalListener());
+		this.interfazGrafica
+				.addListenerAccionTraspuestaImagen(new AccionTraspuestaImagenListener());
+		this.interfazGrafica
+				.addListenerAccionRotacion(new AccionRotacionListener());
 	}
 
 	/**
@@ -942,20 +947,24 @@ public class Controlador {
 	}
 
 	/**
-	 * The listener interface for receiving accionEspejoVertical events.
-	 * The class that is interested in processing a accionEspejoVertical
-	 * event implements this interface, and the object created
-	 * with that class is registered with a component using the
-	 * component's <code>addAccionEspejoVerticalListener<code> method. When
+	 * The listener interface for receiving accionEspejoVertical events. The
+	 * class that is interested in processing a accionEspejoVertical event
+	 * implements this interface, and the object created with that class is
+	 * registered with a component using the component's
+	 * <code>addAccionEspejoVerticalListener<code> method. When
 	 * the accionEspejoVertical event occurs, that object's appropriate
 	 * method is invoked.
-	 *
+	 * 
 	 * @see AccionEspejoVerticalEvent
 	 */
 	public class AccionEspejoVerticalListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
+		 * )
 		 */
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
@@ -964,30 +973,34 @@ public class Controlador {
 			imagen_espejo.setImagen(manipulador.espejoVertical(manipulador
 					.getAcumulador_imagenes()
 					.get(manipulador.getImagen_actual()).getImagen()));
-			
+
 			manipulador.crearImagen(imagen_espejo);
-			
+
 			PintarImagen nueva_pintura = new PintarImagen(manipulador);
 			nueva_pintura.addWindowListenerFrame(new WindowActiveListener(
 					manipulador));
 		}
 	}
-	
+
 	/**
-	 * The listener interface for receiving accionEspejoHorizontal events.
-	 * The class that is interested in processing a accionEspejoHorizontal
-	 * event implements this interface, and the object created
-	 * with that class is registered with a component using the
-	 * component's <code>addAccionEspejoHorizontalListener<code> method. When
+	 * The listener interface for receiving accionEspejoHorizontal events. The
+	 * class that is interested in processing a accionEspejoHorizontal event
+	 * implements this interface, and the object created with that class is
+	 * registered with a component using the component's
+	 * <code>addAccionEspejoHorizontalListener<code> method. When
 	 * the accionEspejoHorizontal event occurs, that object's appropriate
 	 * method is invoked.
-	 *
+	 * 
 	 * @see AccionEspejoHorizontalEvent
 	 */
 	public class AccionEspejoHorizontalListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
+		 * )
 		 */
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
@@ -996,46 +1009,89 @@ public class Controlador {
 			imagen_espejo.setImagen(manipulador.espejoHorizontal(manipulador
 					.getAcumulador_imagenes()
 					.get(manipulador.getImagen_actual()).getImagen()));
-			
+
 			manipulador.crearImagen(imagen_espejo);
-			
+
 			PintarImagen nueva_pintura = new PintarImagen(manipulador);
 			nueva_pintura.addWindowListenerFrame(new WindowActiveListener(
 					manipulador));
-		}	
+		}
 	}
-	
+
 	/**
-	 * The listener interface for receiving accionTraspuestaImagen events.
-	 * The class that is interested in processing a accionTraspuestaImagen
-	 * event implements this interface, and the object created
-	 * with that class is registered with a component using the
-	 * component's <code>addAccionTraspuestaImagenListener<code> method. When
+	 * The listener interface for receiving accionTraspuestaImagen events. The
+	 * class that is interested in processing a accionTraspuestaImagen event
+	 * implements this interface, and the object created with that class is
+	 * registered with a component using the component's
+	 * <code>addAccionTraspuestaImagenListener<code> method. When
 	 * the accionTraspuestaImagen event occurs, that object's appropriate
 	 * method is invoked.
-	 *
+	 * 
 	 * @see AccionTraspuestaImagenEvent
 	 */
 	public class AccionTraspuestaImagenListener implements ActionListener {
 
-		/* (non-Javadoc)
-		 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
+		 * )
 		 */
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
 			Imagenes imagen_traspuesta = new Imagenes();
-			imagen_traspuesta.setImagen(manipulador.traspuestaImagen(manipulador
-					.getAcumulador_imagenes()
-					.get(manipulador.getImagen_actual()).getImagen()));
-			
+			imagen_traspuesta.setImagen(manipulador
+					.traspuestaImagen(manipulador.getAcumulador_imagenes()
+							.get(manipulador.getImagen_actual()).getImagen()));
+
 			manipulador.crearImagen(imagen_traspuesta);
-			
+
 			PintarImagen nueva_pintura = new PintarImagen(manipulador);
 			nueva_pintura.addWindowListenerFrame(new WindowActiveListener(
 					manipulador));
 		}
-		
 	}
-	
+
+	/**
+	 * The listener interface for receiving accionRotacion events. The class
+	 * that is interested in processing a accionRotacion event implements this
+	 * interface, and the object created with that class is registered with a
+	 * component using the component's
+	 * <code>addAccionRotacionListener<code> method. When
+	 * the accionRotacion event occurs, that object's appropriate
+	 * method is invoked.
+	 * 
+	 * @see AccionRotacionEvent
+	 */
+	public class AccionRotacionListener implements ActionListener {
+
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see
+		 * java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent
+		 * )
+		 */
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			SeleccionAngulo angulo = new SeleccionAngulo();
+
+			Imagenes imagen_rotacion = new Imagenes();
+			imagen_rotacion.setImagen(manipulador.rotacion(
+					manipulador.getAcumulador_imagenes()
+							.get(manipulador.getImagen_actual()).getImagen(),
+					angulo.getAngulo()));
+
+			manipulador.crearImagen(imagen_rotacion);
+
+			PintarImagen nueva_pintura = new PintarImagen(manipulador);
+			nueva_pintura.addWindowListenerFrame(new WindowActiveListener(
+					manipulador));
+
+		}
+	}
+
 }
