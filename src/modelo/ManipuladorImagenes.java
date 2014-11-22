@@ -668,6 +668,44 @@ public class ManipuladorImagenes {
 	}
 	
 	/**
+	 * Traspuesta imagen.
+	 *
+	 * @param image the image
+	 * @return the buffered image
+	 */
+	public BufferedImage traspuestaImagen(BufferedImage image) {
+		BufferedImage image_result;
+		
+		int[][] matriz_imagen = Imagenes.getPixelMatrix(image);
+		
+		int [][] matriz_traspuesta_imagen = transpose(matriz_imagen, matriz_imagen.length, matriz_imagen[0].length);
+		
+		image_result = Imagenes.deepCopy(Imagenes.crearImagenMatriz(matriz_traspuesta_imagen));
+		
+		return image_result;
+	}
+	
+	/**
+	 * Transpose.
+	 *
+	 * @param data the data
+	 * @param rows the rows
+	 * @param columns the columns
+	 * @return the int[][]
+	 */
+	public static int[][] transpose(int [][] data, int rows, int columns) {
+		int[][] transpose = new int[columns][rows];
+		
+		for (int i = 0; i < data.length; i++) {
+			for (int j = 0; j < data[i].length; j++) {
+				transpose[j][i] = data[i][j];
+			}
+		}
+		
+		return transpose;
+	}
+	
+	/**
 	 * Swap columns.
 	 *
 	 * @param data the data
