@@ -42,18 +42,17 @@ public class ManipuladorImagenes {
 	 * 
 	 * Constructor de imagenes para el manipulador.
 	 * 
-	 * Se encarga de aniadir una nueva imagen al manipulador
-	 * cada vez que se abre o se realiza una operaci�n sobre 
-	 * una imagen.
+	 * Se encarga de aniadir una nueva imagen al manipulador cada vez que se
+	 * abre o se realiza una operaci�n sobre una imagen.
 	 * 
-	 *  - Se le aniade un identificador.
-	 *  - Se aniade al acumulador de imagenes del manipulador.
-	 *  - Se determina cual es la imagen actual (nueva imagen).
-	 *  - Se determina si la imagen es monocromo.
-	 *
-	 * @param img the img
+	 * - Se le aniade un identificador. - Se aniade al acumulador de imagenes
+	 * del manipulador. - Se determina cual es la imagen actual (nueva imagen).
+	 * - Se determina si la imagen es monocromo.
+	 * 
+	 * @param img
+	 *            the img
 	 */
-	
+
 	public void crearImagen(Imagenes img) {
 		img.setId(acumulador_imagenes.size());
 		acumulador_imagenes.add(img);
@@ -64,10 +63,9 @@ public class ManipuladorImagenes {
 	/**
 	 * Crear gris.
 	 * 
-	 * Genera una nueva imagen en monocromo.
-	 * Tono de gris en formato: PAL.
+	 * Genera una nueva imagen en monocromo. Tono de gris en formato: PAL.
 	 */
-	
+
 	public void crearGris() {
 		Imagenes nuevaImagen = new Imagenes();
 		nuevaImagen.setImagen(acumulador_imagenes.get(imagen_actual)
@@ -104,7 +102,7 @@ public class ManipuladorImagenes {
 	 * 
 	 * Construye el histograma de la imagen actual.
 	 */
-	
+
 	public void crearHistograma() {
 		histograma = new Histograma(acumulador_imagenes.get(imagen_actual));
 		plotHistograma = new PlotHistograma(histograma);
@@ -113,10 +111,10 @@ public class ManipuladorImagenes {
 	/**
 	 * Plot histograma.
 	 * 
-	 * Procesa los datos del histograma de la imagen
-	 * actual para pintarlo en pantalla.
+	 * Procesa los datos del histograma de la imagen actual para pintarlo en
+	 * pantalla.
 	 */
-	
+
 	public void plotHistograma() {
 		histograma.reinicioDatos();
 		histograma.getHistogram();
@@ -126,10 +124,10 @@ public class ManipuladorImagenes {
 	/**
 	 * Plot histograma acumulativo.
 	 * 
-	 * Procesa los datos del histograma acumulativo
-	 * de la imagen actual para pintarlo en pantalla.
+	 * Procesa los datos del histograma acumulativo de la imagen actual para
+	 * pintarlo en pantalla.
 	 */
-	
+
 	public void plotHistogramaAcumulativo() {
 		histograma.reinicioDatos();
 		histograma.getHistogramaAcumulativo();
@@ -139,21 +137,19 @@ public class ManipuladorImagenes {
 	/**
 	 * Ecualizar histograma.
 	 * 
-	 * Realiza la ecualizaci�n del histograma acumulativo
-	 * de la imagen actualmente seleccionada.
+	 * Realiza la ecualizaci�n del histograma acumulativo de la imagen
+	 * actualmente seleccionada.
 	 * 
-	 *  * Procedimiento:
-	 *  	- Creamos una nueva imagen (parte de la imagen actual).
-	 *  	- Creamos su histograma acumulativo.
-	 *  	- Para cada valor del pixel:
-	 *  		- maximo(0, (Rango_pixel/n�_pixeles_imagen) 
-	 *  			* valor_histograma_acumulativo(V_in))
-	 *  
-	 *  			Donde V_in es el pixel que miramos en ese momento (0 - 255).
-	 *  	- Se establecen los nuevos valores a la imagen anteriormente creada.
-	 *  	- Aniadimos la imagen al manipulador de imagenes.
+	 * * Procedimiento: - Creamos una nueva imagen (parte de la imagen actual).
+	 * - Creamos su histograma acumulativo. - Para cada valor del pixel: -
+	 * maximo(0, (Rango_pixel/n�_pixeles_imagen) *
+	 * valor_histograma_acumulativo(V_in))
+	 * 
+	 * Donde V_in es el pixel que miramos en ese momento (0 - 255). - Se
+	 * establecen los nuevos valores a la imagen anteriormente creada. -
+	 * Aniadimos la imagen al manipulador de imagenes.
 	 */
-	
+
 	public void ecualizarHistograma() {
 		int[] LUT = new int[Imagenes.getRango()];
 
@@ -171,8 +167,9 @@ public class ManipuladorImagenes {
 		histograma.getHistogramaAcumulativo();
 
 		rango = Imagenes.getRango();
-		dimensiones = (acumulador_imagenes.get(imagen_actual).getImagen().getWidth() * acumulador_imagenes
-				.get(imagen_actual).getImagen().getHeight());
+		dimensiones = (acumulador_imagenes.get(imagen_actual).getImagen()
+				.getWidth() * acumulador_imagenes.get(imagen_actual)
+				.getImagen().getHeight());
 
 		primera_operacion = rango / dimensiones;
 
@@ -181,7 +178,7 @@ public class ManipuladorImagenes {
 					.round((int) (primera_operacion * histograma
 							.getPixel_red_histograma_acumulativo()[i])));
 
-			if(LUT[i] == Imagenes.getRango())
+			if (LUT[i] == Imagenes.getRango())
 				LUT[i] = Imagenes.getRango() - 1;
 		}
 
@@ -191,26 +188,22 @@ public class ManipuladorImagenes {
 	/**
 	 * Especificar histograma.
 	 * 
-	 * Realiza la especificaci�n del histograma acumulativo normalizado
-	 * de la imagen actual y la susodicha elegida a especificar.
+	 * Realiza la especificaci�n del histograma acumulativo normalizado de la
+	 * imagen actual y la susodicha elegida a especificar.
 	 * 
-	 *  * Procedimiento:
-	 *  	- Creamos una nueva imagen (parte de la imagen actual).
-	 *  	- Calculamos los valores del histograma acumulativo normalizado
-	 *  	de cada imagen.
-	 *  	- Para cada uno de los valores del pixel (i) = (0 - 255):
-	 *  		- Mientras no se llegue al rango maximo (j) = (0 - 255):
-	 *  			- si (valor_imagen_1[i] - valor_imagen_2[j])
-	 *  				<= (valor_imagen_1[i] - valor_imagen_2[j-1]):
-	 *  				- Valor_pixel[i] = j
-	 *  			- sino
-	 *  				- Valor_pixel[i] = j-1
-	 *  	- Se establecen los nuevos valores a la imagen anteriormente creada.
-	 *  	- Aniadimos la imagen al manipulador de imagenes.
-	 *
-	 * @param histogramaEspecificado the histograma especificado
+	 * * Procedimiento: - Creamos una nueva imagen (parte de la imagen actual).
+	 * - Calculamos los valores del histograma acumulativo normalizado de cada
+	 * imagen. - Para cada uno de los valores del pixel (i) = (0 - 255): -
+	 * Mientras no se llegue al rango maximo (j) = (0 - 255): - si
+	 * (valor_imagen_1[i] - valor_imagen_2[j]) <= (valor_imagen_1[i] -
+	 * valor_imagen_2[j-1]): - Valor_pixel[i] = j - sino - Valor_pixel[i] = j-1
+	 * - Se establecen los nuevos valores a la imagen anteriormente creada. -
+	 * Aniadimos la imagen al manipulador de imagenes.
+	 * 
+	 * @param histogramaEspecificado
+	 *            the histograma especificado
 	 */
-	
+
 	public void especificarHistograma(int histogramaEspecificado) {
 		int[] LUT = new int[Imagenes.getRango()];
 
@@ -219,15 +212,15 @@ public class ManipuladorImagenes {
 		double primeraResta;
 		double segundaResta;
 
-		double dimensionImagen1 =
-		acumulador_imagenes.get(imagen_actual).getImagen().getWidth()
-		* acumulador_imagenes.get(imagen_actual).getImagen().getHeight();
-		
-		double dimensionImagen2 =
-		acumulador_imagenes.get(histogramaEspecificado).getImagen()
-		.getWidth() *
-		acumulador_imagenes.get(histogramaEspecificado).getImagen()
-		.getHeight();
+		double dimensionImagen1 = acumulador_imagenes.get(imagen_actual)
+				.getImagen().getWidth()
+				* acumulador_imagenes.get(imagen_actual).getImagen()
+						.getHeight();
+
+		double dimensionImagen2 = acumulador_imagenes
+				.get(histogramaEspecificado).getImagen().getWidth()
+				* acumulador_imagenes.get(histogramaEspecificado).getImagen()
+						.getHeight();
 
 		double valor_histograma_1;
 		double valor_histograma_2;
@@ -249,17 +242,20 @@ public class ManipuladorImagenes {
 			iteradorJ = 1;
 
 			while (true) {
-				valor_histograma_1 = histograma.getPixel_red_histograma_acumulativo()[i];
+				valor_histograma_1 = histograma
+						.getPixel_red_histograma_acumulativo()[i];
 				valor_histograma_2 = histogramaSegundaImagen
 						.getPixel_red_histograma_acumulativo()[iteradorJ];
 				valor_histograma_2_anterior = histogramaSegundaImagen
 						.getPixel_red_histograma_acumulativo()[iteradorJ - 1];
 
-				valor_histograma_1 = valor_histograma_1/dimensionImagen1; 
-				valor_histograma_2 = valor_histograma_2/dimensionImagen2;
-				valor_histograma_2_anterior = valor_histograma_2_anterior/dimensionImagen2;
+				valor_histograma_1 = valor_histograma_1 / dimensionImagen1;
+				valor_histograma_2 = valor_histograma_2 / dimensionImagen2;
+				valor_histograma_2_anterior = valor_histograma_2_anterior
+						/ dimensionImagen2;
 
-				if (valor_histograma_1 < valor_histograma_2 || iteradorJ == Imagenes.getRango() - 1)
+				if (valor_histograma_1 < valor_histograma_2
+						|| iteradorJ == Imagenes.getRango() - 1)
 					break;
 				else
 					iteradorJ++;
@@ -267,9 +263,11 @@ public class ManipuladorImagenes {
 
 			primeraResta = Math.abs(valor_histograma_2 - valor_histograma_1);
 
-			segundaResta = Math.abs(valor_histograma_2_anterior - valor_histograma_1);
+			segundaResta = Math.abs(valor_histograma_2_anterior
+					- valor_histograma_1);
 
-			if (primeraResta <= segundaResta || iteradorJ == Imagenes.getRango() - 1)
+			if (primeraResta <= segundaResta
+					|| iteradorJ == Imagenes.getRango() - 1)
 				LUT[i] = iteradorJ;
 			else
 				LUT[i] = iteradorJ - 1;
@@ -285,17 +283,16 @@ public class ManipuladorImagenes {
 	 * 
 	 * Realizacion de la correccion gamma de una imagen.
 	 * 
-	 *  * Procedimiento:
-	 *  	- Creamos una nueva imagen (parte de la imagen actual).
-	 *  	- Para cada uno de los valores del pixel (i):
-	 *  		- Normalizamos el valor del pixel (i / n� maximo pixeles).
-	 *  		- Elevamos el valor normalizado del pixel al valor gamma
-	 *  		(pixel_normalizado ^ valor_gamma).
-	 *  		- Establecemos el valor calculado al rango de valores (0 - 255).
-	 *  	- Se establecen los nuevos valores a la imagen anteriormente creada.
-	 * 		- Aniadimos la imagen al manipulador de imagenes.
-	 *
-	 * @param valorGamma the valor gamma
+	 * * Procedimiento: - Creamos una nueva imagen (parte de la imagen actual).
+	 * - Para cada uno de los valores del pixel (i): - Normalizamos el valor del
+	 * pixel (i / n� maximo pixeles). - Elevamos el valor normalizado del pixel
+	 * al valor gamma (pixel_normalizado ^ valor_gamma). - Establecemos el valor
+	 * calculado al rango de valores (0 - 255). - Se establecen los nuevos
+	 * valores a la imagen anteriormente creada. - Aniadimos la imagen al
+	 * manipulador de imagenes.
+	 * 
+	 * @param valorGamma
+	 *            the valor gamma
 	 */
 	public void correccionGamma(double valorGamma) {
 		int[] LUT = new int[Imagenes.getRango()];
@@ -323,14 +320,14 @@ public class ManipuladorImagenes {
 	/**
 	 * Diferencia imagenes lut.
 	 * 
-	 * Calcula las diferencias de los pixeles de una imagen,
-	 * comparandolos con un umbral, para establecer si ese
-	 * pixel ha cambiado o no.
-	 *
-	 * @param umbral the umbral
+	 * Calcula las diferencias de los pixeles de una imagen, comparandolos con
+	 * un umbral, para establecer si ese pixel ha cambiado o no.
+	 * 
+	 * @param umbral
+	 *            the umbral
 	 * @return the boolean[]
 	 */
-	
+
 	public boolean[] diferenciaImagenesLUT(int umbral) {
 		boolean[] LUT = new boolean[Imagenes.getRango()];
 
@@ -347,20 +344,18 @@ public class ManipuladorImagenes {
 	/**
 	 * Resta imagenes.
 	 * 
-	 * Se realiza la resta de dos imagenes para establecer
-	 * sus cambios.
+	 * Se realiza la resta de dos imagenes para establecer sus cambios.
 	 * 
-	 *  * Procedimiento:
-	 *  	- Creamos una nueva imagen (parte de la imagen actual).
-	 *   	- Para cada uno de los pixeles de la nueva imagen:
-	 *   		- Establecemos el valor del pixel a la resta de los
-	 *   		valores de los pixeles de las imagenes.
-	 *   	- Devolvemos la imagen que contiene la resta.
-	 *
-	 * @param imagen2 the imagen2
+	 * * Procedimiento: - Creamos una nueva imagen (parte de la imagen actual).
+	 * - Para cada uno de los pixeles de la nueva imagen: - Establecemos el
+	 * valor del pixel a la resta de los valores de los pixeles de las imagenes.
+	 * - Devolvemos la imagen que contiene la resta.
+	 * 
+	 * @param imagen2
+	 *            the imagen2
 	 * @return the imagenes
 	 */
-	
+
 	public Imagenes restaImagenes(int imagen2) {
 		int resta = 0;
 
@@ -404,23 +399,21 @@ public class ManipuladorImagenes {
 	/**
 	 * Diferencia de imagenes.
 	 * 
-	 * Realiza la diferencia de la imagenes para sacar una nueva
-	 * imagen donde se muestre los cambios entre las dos imagenes
-	 * en rojo.
+	 * Realiza la diferencia de la imagenes para sacar una nueva imagen donde se
+	 * muestre los cambios entre las dos imagenes en rojo.
 	 * 
-	 *  * Procedimiento:
-	 *  	- Creamos una nueva imagen (parte de la imagen actual).
-	 *  	- Por cada fila de la imagen (i):
-	 *  		- Por cada columna de la imagen (j):
-	 *  			- Si el pixel de la imagen se ha establecido
-	 *  			como cambio, se establece ese pixel de la nueva
-	 *  			imagen a color rojo.
-	 *  	- Aniadimos la imagen al manipulador de imagenes.
-	 *
-	 * @param imagenCopia the imagen copia
-	 * @param LUT the lut
+	 * * Procedimiento: - Creamos una nueva imagen (parte de la imagen actual).
+	 * - Por cada fila de la imagen (i): - Por cada columna de la imagen (j): -
+	 * Si el pixel de la imagen se ha establecido como cambio, se establece ese
+	 * pixel de la nueva imagen a color rojo. - Aniadimos la imagen al
+	 * manipulador de imagenes.
+	 * 
+	 * @param imagenCopia
+	 *            the imagen copia
+	 * @param LUT
+	 *            the lut
 	 */
-	
+
 	public void diferenciaDeImagenes(Imagenes imagenCopia, boolean[] LUT) {
 		Imagenes nuevaImagen = new Imagenes();
 		nuevaImagen.setImagen(acumulador_imagenes.get(imagen_actual)
@@ -461,7 +454,7 @@ public class ManipuladorImagenes {
 	/**
 	 * P v_in.
 	 * 
-	 *  - p(V_in): Probabilidad del nivel de gris V_in de la imagen.
+	 * - p(V_in): Probabilidad del nivel de gris V_in de la imagen.
 	 * 
 	 * @param valor
 	 *            the valor
@@ -473,15 +466,15 @@ public class ManipuladorImagenes {
 	 *            the numero_fil
 	 * @return the double
 	 */
-	public static double pV_in(int valor, int[] pixeles, int numero_col, int numero_fil) {
+	public static double pV_in(int valor, int[] pixeles, int numero_col,
+			int numero_fil) {
 		return (double) getNumberOcurrencias(valor, pixeles)
 				/ (numero_col * numero_fil);
 	}
 
 	/**
-	 * Gets the entropia.
-	 * - Entropía:
-	 * Calcula el valor de la entropia, solo para imagenes en gris.
+	 * Gets the entropia. - Entropía: Calcula el valor de la entropia, solo para
+	 * imagenes en gris.
 	 * 
 	 * Entropía = desde V_in = 0 hasta 255 - ∑ ( p(V_in) * log( p(V_in) ) )
 	 * 
@@ -509,17 +502,17 @@ public class ManipuladorImagenes {
 	}
 
 	/**
-	 * Binarize.
-	 *  Binarizar
-	 *       # Se pide el valor a partir del cual se quiere binarizar la imagen (v).
-	 *       
-	 *       # Construir una LUT igual que en el caso anterior.
-	 *       
-	 *       # Por cada valor de V_in desde 0 a v - 1 que tome V_out, la transformación
-	 *       para V_out será un 0.
-	 *       
-	 *       # Por cada valor de V_in desde v a 255 que tome V_out, la transformación
-	 *       para V_out será un 255.
+	 * Binarize. Binarizar # Se pide el valor a partir del cual se quiere
+	 * binarizar la imagen (v).
+	 * 
+	 * # Construir una LUT igual que en el caso anterior.
+	 * 
+	 * # Por cada valor de V_in desde 0 a v - 1 que tome V_out, la
+	 * transformación para V_out será un 0.
+	 * 
+	 * # Por cada valor de V_in desde v a 255 que tome V_out, la transformación
+	 * para V_out será un 255.
+	 * 
 	 * @param original
 	 *            the original
 	 * @param umbral
@@ -557,166 +550,236 @@ public class ManipuladorImagenes {
 		return binarized;
 
 	}
-	
-	
+
 	/**
 	 * Gets the brillo actual.
 	 * 
 	 * Calcula el brillo actual dado un objeto tipo imagen.
 	 * 
-	 * @param image the image
+	 * @param image
+	 *            the image
 	 * @return the brillo actual
 	 */
 	public static double getBrilloActual(Imagenes image) {
 		double brillo_actual = 0;
-		
+
 		for (int v_in = 0; v_in < Imagenes.RANGO; v_in++) {
-			brillo_actual += (v_in * pV_in(v_in, image.getPixel_red(), image.getImagen().getWidth(), image.getImagen().getHeight()));
+			brillo_actual += (v_in * pV_in(v_in, image.getPixel_red(), image
+					.getImagen().getWidth(), image.getImagen().getHeight()));
 		}
-		
+
 		return brillo_actual;
 	}
-	
-	
-	
+
 	/**
 	 * Gets the contraste actual.
 	 * 
 	 * Calcula el contraste actual dada una imagen.
 	 * 
-	 * @param image the image
+	 * @param image
+	 *            the image
 	 * @return the contraste actual
 	 */
 	public static double getContrasteActual(Imagenes image) {
 		double contraste_actual = 0;
 		double brillo_actual = getBrilloActual(image);
-		
+
 		for (int vi_in = 0; vi_in < Imagenes.RANGO; vi_in++) {
 			double base = (vi_in - brillo_actual);
-			contraste_actual += (Math.pow(base, 2) * pV_in(vi_in, image.getPixel_red(), image.getImagen().getWidth(), image.getImagen().getHeight()));
+			contraste_actual += (Math.pow(base, 2) * pV_in(vi_in,
+					image.getPixel_red(), image.getImagen().getWidth(), image
+							.getImagen().getHeight()));
 		}
-		
+
 		return Math.sqrt(contraste_actual);
 	}
+
 	/**
 	 * Digitalizacion de imagen.
-	 *
-	 * @param muestreo_1 the muestreo_1
-	 * @param muestreo_2 the muestreo_2
-	 * @param cuantizacion the cuantizacion
+	 * 
+	 * @param muestreo_1
+	 *            the muestreo_1
+	 * @param muestreo_2
+	 *            the muestreo_2
+	 * @param cuantizacion
+	 *            the cuantizacion
 	 */
-	
-	public void digitalizar(int muestreo_1, int muestreo_2, int cuantizacion){
+
+	public void digitalizar(int muestreo_1, int muestreo_2, int cuantizacion) {
 		Imagenes nuevaImagen = new Imagenes();
 		nuevaImagen.setImagen(acumulador_imagenes.get(imagen_actual)
 				.getImagen());
-		
-		int [] LUT = new int [Imagenes.getRango()];
-		
-		int umbral_n_muestras = (int)(Imagenes.getRango()/Math.pow(2, cuantizacion));
+
+		int[] LUT = new int[Imagenes.getRango()];
+
+		int umbral_n_muestras = (int) (Imagenes.getRango() / Math.pow(2,
+				cuantizacion));
 		int sumando = umbral_n_muestras;
-		
-		for(int i = 0; i < LUT.length; i++){
-			if(i < sumando)
+
+		for (int i = 0; i < LUT.length; i++) {
+			if (i < sumando)
 				LUT[i] = sumando;
-			else{
+			else {
 				sumando += umbral_n_muestras;
-				if(sumando >= Imagenes.getRango())
+				if (sumando >= Imagenes.getRango())
 					sumando = Imagenes.getRango() - 1;
 				LUT[i] = sumando;
 			}
 		}
-		
+
 		nuevaImagen.setDigitalizacion(muestreo_1, muestreo_2, LUT);
 		crearImagen(nuevaImagen);
 	}
 
 	/**
 	 * Espejo vertical.
-	 *
-	 * @param image the image
+	 * 
+	 * @param image
+	 *            the image
 	 * @return the buffered image
 	 */
 	public BufferedImage espejoVertical(BufferedImage image) {
 		BufferedImage image_result;
-		
+
 		int[][] matriz_imagen = Imagenes.getPixelMatrix(image);
-		
+
 		swapRows(matriz_imagen, matriz_imagen.length);
-		
-		image_result = Imagenes.deepCopy(Imagenes.crearImagenMatriz(matriz_imagen));
-		
+
+		image_result = Imagenes.deepCopy(Imagenes
+				.crearImagenMatriz(matriz_imagen));
+
 		return image_result;
 	}
-	
+
 	/**
 	 * Espejo horizontal.
-	 *
-	 * @param image the image
+	 * 
+	 * @param image
+	 *            the image
 	 * @return the buffered image
 	 */
 	public BufferedImage espejoHorizontal(BufferedImage image) {
 		BufferedImage image_result;
-		
+
 		int[][] matriz_imagen = Imagenes.getPixelMatrix(image);
-		
+
 		swapColumns(matriz_imagen, matriz_imagen[0].length);
-		
-		image_result = Imagenes.deepCopy(Imagenes.crearImagenMatriz(matriz_imagen));
-		
+
+		image_result = Imagenes.deepCopy(Imagenes
+				.crearImagenMatriz(matriz_imagen));
+
 		return image_result;
 	}
-	
+
 	/**
 	 * Traspuesta imagen.
-	 *
-	 * @param image the image
+	 * 
+	 * @param image
+	 *            the image
 	 * @return the buffered image
 	 */
 	public BufferedImage traspuestaImagen(BufferedImage image) {
 		BufferedImage image_result;
-		
+
 		int[][] matriz_imagen = Imagenes.getPixelMatrix(image);
-		
-		int [][] matriz_traspuesta_imagen = transpose(matriz_imagen, matriz_imagen.length, matriz_imagen[0].length);
-		
-		image_result = Imagenes.deepCopy(Imagenes.crearImagenMatriz(matriz_traspuesta_imagen));
-		
+
+		int[][] matriz_traspuesta_imagen = transpose(matriz_imagen,
+				matriz_imagen.length, matriz_imagen[0].length);
+
+		image_result = Imagenes.deepCopy(Imagenes
+				.crearImagenMatriz(matriz_traspuesta_imagen));
+
 		return image_result;
 	}
-	
+
+	/**
+	 * Rotacion.
+	 *
+	 * @param image the image
+	 * @param angulo the angulo
+	 * @return the buffered image
+	 */
+	public BufferedImage rotacion(BufferedImage image, int angulo) {
+		final int ANGLE_90 = 90;
+		final int ANGLE_180 = 180;
+		final int ANGLE_270 = 270;
+
+		BufferedImage image_result;
+		
+		int[][] matriz_imagen = Imagenes.getPixelMatrix(image); 
+		
+		int[][] matriz_traspuesta_imagen;
+		
+		switch (angulo) {
+		case ANGLE_90:
+			matriz_traspuesta_imagen = transpose(matriz_imagen,
+					matriz_imagen.length, matriz_imagen[0].length);
+
+			image_result = Imagenes.deepCopy(Imagenes
+					.crearImagenMatriz(matriz_traspuesta_imagen));
+			break;
+
+		case ANGLE_180:
+			swapColumns(matriz_imagen, matriz_imagen[0].length);
+
+			image_result = Imagenes.deepCopy(Imagenes
+					.crearImagenMatriz(matriz_imagen));
+			break;
+		
+		case ANGLE_270:
+			swapColumns(matriz_imagen, matriz_imagen[0].length);
+
+			matriz_traspuesta_imagen = transpose(matriz_imagen,
+					matriz_imagen.length, matriz_imagen[0].length);
+			
+			image_result = Imagenes.deepCopy(Imagenes
+					.crearImagenMatriz(matriz_traspuesta_imagen));
+			break;
+			
+		default:
+			image_result = null;
+			break;
+		}
+
+		return image_result;
+	}
+
 	/**
 	 * Transpose.
-	 *
-	 * @param data the data
-	 * @param rows the rows
-	 * @param columns the columns
+	 * 
+	 * @param data
+	 *            the data
+	 * @param rows
+	 *            the rows
+	 * @param columns
+	 *            the columns
 	 * @return the int[][]
 	 */
-	public static int[][] transpose(int [][] data, int rows, int columns) {
+	public static int[][] transpose(int[][] data, int rows, int columns) {
 		int[][] transpose = new int[columns][rows];
-		
+
 		for (int i = 0; i < data.length; i++) {
 			for (int j = 0; j < data[i].length; j++) {
 				transpose[j][i] = data[i][j];
 			}
 		}
-		
+
 		return transpose;
 	}
-	
+
 	/**
 	 * Swap columns.
-	 *
-	 * @param data the data
-	 * @param columns the columns
+	 * 
+	 * @param data
+	 *            the data
+	 * @param columns
+	 *            the columns
 	 */
 	public static void swapColumns(int[][] data, int columns) {
 		int start = 0;
 		int end = columns - 1;
-		
+
 		int mitad = columns / 2;
-		
 
 		while ((start <= mitad) && (end >= mitad)) {
 			for (int value = 0; value < data.length; value++) {
@@ -727,21 +790,23 @@ public class ManipuladorImagenes {
 			start++;
 			end--;
 		}
-		
+
 	}
-	
+
 	/**
 	 * Swap rows.
-	 *
-	 * @param data the data
-	 * @param rows the rows
+	 * 
+	 * @param data
+	 *            the data
+	 * @param rows
+	 *            the rows
 	 */
 	public static void swapRows(int[][] data, int rows) {
 		int start = 0;
 		int end = data.length - 1;
-		
+
 		int mitad = rows / 2;
-		
+
 		while ((start <= mitad) && (end >= mitad)) {
 			for (int value = 0; value < data[start].length; value++) {
 				int temp = data[start][value];
@@ -750,10 +815,10 @@ public class ManipuladorImagenes {
 			}
 			start++;
 			end--;
-			
-		}	
+
+		}
 	}
-	
+
 	/**
 	 * Gets the acumulador_imagenes.
 	 * 
