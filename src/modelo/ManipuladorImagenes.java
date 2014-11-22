@@ -649,6 +649,12 @@ public class ManipuladorImagenes {
 		return image_result;
 	}
 	
+	/**
+	 * Espejo horizontal.
+	 *
+	 * @param image the image
+	 * @return the buffered image
+	 */
 	public BufferedImage espejoHorizontal(BufferedImage image) {
 		BufferedImage image_result;
 		
@@ -661,6 +667,12 @@ public class ManipuladorImagenes {
 		return image_result;
 	}
 	
+	/**
+	 * Swap columns.
+	 *
+	 * @param data the data
+	 * @param columns the columns
+	 */
 	public static void swapColumns(int[][] data, int columns) {
 		int start = 0;
 		int end = columns - 1;
