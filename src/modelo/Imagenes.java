@@ -821,6 +821,13 @@ public class Imagenes {
 		return LUT;
 	}
 
+	/**
+	 * Crear imagen matriz.
+	 *
+	 * @param pixel the pixel
+	 * @param imagen_referencia the imagen_referencia
+	 * @return the buffered image
+	 */
 	public static BufferedImage crearImagenMatriz(int [][] pixel, BufferedImage imagen_referencia) {
 		BufferedImage image_result = deepCopy(imagen_referencia);
 		
@@ -833,3 +840,4 @@ public class Imagenes {
 	}
 	
 }
+

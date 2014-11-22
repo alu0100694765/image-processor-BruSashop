@@ -631,6 +631,12 @@ public class ManipuladorImagenes {
 		crearImagen(nuevaImagen);
 	}
 
+	/**
+	 * Espejo vertical.
+	 *
+	 * @param image the image
+	 * @return the buffered image
+	 */
 	public BufferedImage espejoVertical(BufferedImage image) {
 		BufferedImage image_result;
 		
@@ -643,6 +649,12 @@ public class ManipuladorImagenes {
 		return image_result;
 	}
 	
+	/**
+	 * Swap rows.
+	 *
+	 * @param data the data
+	 * @param rows the rows
+	 */
 	public static void swapRows(int[][] data, int rows) {
 		int start = 0;
 		int end = data.length - 1;

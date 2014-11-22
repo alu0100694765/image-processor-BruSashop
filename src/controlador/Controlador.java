@@ -939,6 +939,17 @@ public class Controlador {
 
 	}
 
+	/**
+	 * The listener interface for receiving accionEspejoVertical events.
+	 * The class that is interested in processing a accionEspejoVertical
+	 * event implements this interface, and the object created
+	 * with that class is registered with a component using the
+	 * component's <code>addAccionEspejoVerticalListener<code> method. When
+	 * the accionEspejoVertical event occurs, that object's appropriate
+	 * method is invoked.
+	 *
+	 * @see AccionEspejoVerticalEvent
+	 */
 	public class AccionEspejoVerticalListener implements ActionListener {
 
 		@Override
