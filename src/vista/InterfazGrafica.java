@@ -489,4 +489,13 @@ public class InterfazGrafica {
 	public void addListenerAccionTraspuestaImagen(ActionListener ListenForTraspuestaImagen) {
 		accion_herramientas_traspuesta_imagen.addActionListener(ListenForTraspuestaImagen);
 	}
+	
+	/**
+	 * Adds the listener accion rotacion.
+	 *
+	 * @param ListenForRotacion the listen for rotacion
+	 */
+	public void addListenerAccionRotacion(ActionListener ListenForRotacion) {
+		accion_herramientas_rotacion.addActionListener(ListenForRotacion);
+	}
 }
