@@ -456,4 +456,13 @@ public class InterfazGrafica {
 		accion_herramientas_espejo_vertical.addActionListener(ListenForEspejoVertical);
 	}
 
+	/**
+	 * Adds the listener accion espejo horizontal.
+	 *
+	 * @param ListenForEspejoHorizontal the listen for espejo horizontal
+	 */
+	public void addListenerAccionEspejoHorizontal(ActionListener ListenForEspejoHorizontal) {
+		accion_herramientas_espejo_horizontal.addActionListener(ListenForEspejoHorizontal);
+	}
+	
 }
