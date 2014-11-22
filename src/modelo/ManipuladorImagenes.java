@@ -649,6 +649,37 @@ public class ManipuladorImagenes {
 		return image_result;
 	}
 	
+	public BufferedImage espejoHorizontal(BufferedImage image) {
+		BufferedImage image_result;
+		
+		int[][] matriz_imagen = Imagenes.getPixelMatrix(image);
+		
+		swapColumns(matriz_imagen, matriz_imagen[0].length);
+		
+		image_result = Imagenes.deepCopy(Imagenes.crearImagenMatriz(matriz_imagen, image));
+		
+		return image_result;
+	}
+	
+	public static void swapColumns(int[][] data, int columns) {
+		int start = 0;
+		int end = columns - 1;
+		
+		int mitad = columns / 2;
+		
+
+		while ((start <= mitad) && (end >= mitad)) {
+			for (int value = 0; value < data.length; value++) {
+				int temp = data[value][start];
+				data[value][start] = data[value][end];
+				data[value][end] = temp;
+			}
+			start++;
+			end--;
+		}
+		
+	}
+	
 	/**
 	 * Swap rows.
 	 *
