@@ -644,7 +644,7 @@ public class ManipuladorImagenes {
 		
 		swapRows(matriz_imagen, matriz_imagen.length);
 		
-		image_result = Imagenes.deepCopy(Imagenes.crearImagenMatriz(matriz_imagen, image));
+		image_result = Imagenes.deepCopy(Imagenes.crearImagenMatriz(matriz_imagen));
 		
 		return image_result;
 	}
@@ -662,7 +662,7 @@ public class ManipuladorImagenes {
 		
 		swapColumns(matriz_imagen, matriz_imagen[0].length);
 		
-		image_result = Imagenes.deepCopy(Imagenes.crearImagenMatriz(matriz_imagen, image));
+		image_result = Imagenes.deepCopy(Imagenes.crearImagenMatriz(matriz_imagen));
 		
 		return image_result;
 	}

@@ -828,8 +828,8 @@ public class Imagenes {
 	 * @param imagen_referencia the imagen_referencia
 	 * @return the buffered image
 	 */
-	public static BufferedImage crearImagenMatriz(int [][] pixel, BufferedImage imagen_referencia) {
-		BufferedImage image_result = deepCopy(imagen_referencia);
+	public static BufferedImage crearImagenMatriz(int [][] pixel) {
+		BufferedImage image_result = new BufferedImage(pixel.length, pixel[0].length, BufferedImage.TYPE_INT_RGB);
 		
 		for (int i = 0; i < pixel.length; i++) {
 			for (int j = 0; j < pixel[i].length; j++) {
