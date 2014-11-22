@@ -96,6 +96,7 @@ public class Controlador {
 		this.interfazGrafica
 				.addListenerAccionEspejoVertical(new AccionEspejoVerticalListener());
 		this.interfazGrafica.addListenerAccionEspejoHorizontal(new AccionEspejoHorizontalListener());
+		this.interfazGrafica.addListenerAccionTraspuestaImagen(new AccionTraspuestaImagenListener());
 	}
 
 	/**
@@ -985,6 +986,25 @@ public class Controlador {
 			nueva_pintura.addWindowListenerFrame(new WindowActiveListener(
 					manipulador));
 		}	
+	}
+	
+	public class AccionTraspuestaImagenListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			Imagenes imagen_traspuesta = new Imagenes();
+			imagen_traspuesta.setImagen(manipulador.traspuestaImagen(manipulador
+					.getAcumulador_imagenes()
+					.get(manipulador.getImagen_actual()).getImagen()));
+			
+			manipulador.crearImagen(imagen_traspuesta);
+			
+			PintarImagen nueva_pintura = new PintarImagen(manipulador);
+			nueva_pintura.addWindowListenerFrame(new WindowActiveListener(
+					manipulador));
+		}
+		
 	}
 	
 }
