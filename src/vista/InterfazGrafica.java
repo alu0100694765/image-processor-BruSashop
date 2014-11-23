@@ -113,6 +113,12 @@ public class InterfazGrafica {
 	/** The Constant ROTACION. */
 	public final static String ROTACION = "Rotacion";
 	
+	/** The Constant ESCALADO_VMP. */
+	public final static String ESCALADO_VMP = "Escalado VMP";
+	
+	/** The Constant ESCALADO_BILINEAR. */
+	public final static String ESCALADO_BILINEAR = "Escalado bilinear";
+	
 	/** The frame. */
 	public JFrame frame;
 
@@ -197,6 +203,12 @@ public class InterfazGrafica {
 	/** The accion_herramientas_rotacion. */
 	public JMenuItem accion_herramientas_rotacion;
 	
+	/** The accion_herramientas_escalado_vmp. */
+	public JMenuItem accion_herramientas_escalado_vmp;
+	
+	/** The accion_herramientas_escalado_bilinear. */
+	public JMenuItem accion_herramientas_escalado_bilinear;
+	
 	/**
 	 * Instantiates a new interfaz grafica.
 	 */
@@ -242,6 +254,8 @@ public class InterfazGrafica {
 		accion_herramientas_espejo_horizontal = new JMenuItem(ESPEJO_H);
 		accion_herramientas_traspuesta_imagen = new JMenuItem(TRASPUESTA);
 		accion_herramientas_rotacion = new JMenuItem(ROTACION);
+		accion_herramientas_escalado_vmp = new JMenuItem(ESCALADO_VMP);
+		accion_herramientas_escalado_bilinear = new JMenuItem(ESCALADO_BILINEAR);
 		
 		//Añadiendo atajos
 		acciones_archivo_abrir.setMnemonic(OPEN_FILE);
@@ -275,6 +289,8 @@ public class InterfazGrafica {
 		menu_herramientas.add(accion_herramientas_espejo_horizontal);
 		menu_herramientas.add(accion_herramientas_traspuesta_imagen);
 		menu_herramientas.add(accion_herramientas_rotacion);
+		menu_herramientas.add(accion_herramientas_escalado_vmp);
+		menu_herramientas.add(accion_herramientas_escalado_bilinear);
 		menu_editar.add(acciones_editar_region_interes);
 		
 		
