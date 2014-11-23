@@ -9,6 +9,7 @@ package modelo;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
+
 import vista.PlotHistograma;
 
 // TODO: Auto-generated Javadoc
@@ -755,6 +756,180 @@ public class ManipuladorImagenes {
 
 		return image_result;
 	}
+	
+	/**
+	 * Escalado vmp. Crea una nueva imagen a partir de unas nuevas
+	 * dimensiones.
+	 *
+	 * @param img the img
+	 * @param new_width the new_width
+	 * @param new_heigth the new_heigth
+	 * @return the buffered image
+	 */
+	public BufferedImage escaladoVMP(BufferedImage img, int new_width, int new_heigth) {
+		BufferedImage imagen_escalada;
+		
+		int[][] matriz_imagen_escalada = VMP(img, new_width, new_heigth);
+		
+		imagen_escalada = Imagenes.deepCopy(Imagenes.crearImagenMatriz(matriz_imagen_escalada));
+		
+		return imagen_escalada;
+	}
+	
+	/**
+	 * Escalado bilineal. Crea una nueva imagen a partir de unas nuevas
+	 * dimensiones.
+	 *
+	 * @param img the img
+	 * @param new_width the new_width
+	 * @param new_heigth the new_heigth
+	 * @return the buffered image
+	 */
+	public BufferedImage escaladoBilineal(BufferedImage img, int new_width, int new_heigth) {
+		BufferedImage imagen_escalada;
+		
+		int[][] matriz_imagen_escalada = algoritmoBilinear(img, new_width, new_heigth);
+		
+		imagen_escalada = Imagenes.deepCopy(Imagenes.crearImagenMatriz(matriz_imagen_escalada));
+		
+		return imagen_escalada;
+	}
+	
+	/**
+	 * Algoritmo bilinear.
+	 *
+	 * @param img the img
+	 * @param new_width the new_width
+	 * @param new_heigth the new_heigth
+	 * @return the int[][]
+	 */
+	public int[][] algoritmoBilinear(BufferedImage img, int new_width,
+			int new_heigth) {
+		// Calculo de factores del escalado
+		float factor_ancho = (float) (new_width / img.getWidth());
+		float factor_alto = (float) (new_heigth / img.getHeight());
+
+		// Matriz de la imagen y la matriz resultante
+		int[][] matriz_imagen = Imagenes.getPixelMatrix(img);
+		int[][] matriz_resultante = new int[new_width][new_heigth];
+
+		// Puntos de refencia
+		int A, B, C, D;
+
+		for (int i = 0; i < new_width; i++) {
+			for (int j = 0; j < new_heigth; j++) {
+
+				float px, py;
+
+				// Transformacion inversa
+				px = i / factor_ancho;
+				py = j / factor_alto;
+
+				// Vecinos alrededor
+				//  PX			  PX1
+				int px_izquierda, px_derecha;
+				int py_izquierda, py_derecha;
+
+				px_izquierda = (int) Math.floor(px);
+				px_derecha = (int) Math.ceil(px);
+				py_izquierda = (int) Math.floor(py);
+				py_derecha = (int) Math.ceil(py);
+
+				if ((int) px_derecha == (int) img.getWidth()) {
+					px_derecha--;
+				}
+
+				if ((int) py_derecha == (int) img.getHeight()) {
+					py_derecha--;
+				}
+
+				// Calculo de puntos proximos
+				A = matriz_imagen[px_izquierda][py_derecha];
+				B = matriz_imagen[px_derecha][py_derecha];
+				C = matriz_imagen[px_izquierda][py_izquierda];
+				D = matriz_imagen[px_derecha][py_izquierda];
+
+				float p = px - px_izquierda;
+				float q = py - py_izquierda;
+
+				int valor_pixel = (int) (C + (D - C) * p + (A - C) * q + (B + C
+						- A - D)
+						* p * q);
+				matriz_resultante[i][j] = valor_pixel;
+			}
+		}
+
+		return matriz_resultante;
+	}
+	
+	/**
+	 * Vmp. Algoritmo Vecino mas Proximo
+	 *
+	 * @param img the img
+	 * @param new_width the new_widht
+	 * @param new_heigth the new_height
+	 * @return the int[][]
+	 */
+	public int[][] VMP(BufferedImage img, int new_width, int new_heigth) {
+		// Calculo del factor de escalado
+		float factor_ancho = (float) (new_width / img.getWidth());
+		float factor_alto = (float) (new_heigth / img.getHeight());
+
+		// Calculo de la matriz de la imagen y de la matriz resultante
+		int[][] matriz_imagen = Imagenes.getPixelMatrix(img);
+		int[][] matriz_resultante = new int[new_width][new_heigth];
+
+		for (int i = 0; i < new_width; i++) {
+			for (int j = 0; j < new_heigth; j++) {
+
+				float px, py;
+
+				// Transformacion Inversa
+				px = i / factor_ancho;
+				py = j / factor_alto;
+
+				// Localizacion del vecino mas proximo
+				int proximo_x_izquierda, proximo_x_derecha;
+				int proximo_y_izquierda, proximo_y_derecha;
+
+				// Math floor devuelve el vecino mas proximo hacia -infinito
+				// Math ceil devuelve el vecino mas proximo hacia el +infinito
+				proximo_x_izquierda = (int) Math.floor(px);
+				proximo_x_derecha = (int) Math.ceil(px);
+				proximo_y_izquierda = (int) Math.floor(py);
+				proximo_y_derecha = (int) Math.ceil(py);
+
+				// Obteniendo vecinos en el eje Y
+				if ((px - proximo_x_izquierda) < (proximo_x_derecha - px)) {
+					px = proximo_x_izquierda;
+				} else {
+					px = proximo_x_derecha;
+				}
+
+				// Obteniendo vecinos en el eje X
+				if ((py - proximo_y_izquierda) < (proximo_y_derecha - py)) {
+					py = proximo_y_izquierda;
+				} else {
+					py = proximo_y_derecha;
+				}
+
+				// Comprobacion de posibles fueras de rangos
+				if ((int) px >= img.getWidth()) {
+					px = (float) (img.getWidth() - 1);
+				}
+
+				if ((int) py >= img.getHeight()) {
+					py = (float) (img.getHeight() - 1);
+				}
+
+				// Realizando el mapeo de la imagen
+				matriz_resultante[i][j] = matriz_imagen[(int) px][(int) py];
+			}
+		}
+
+		return matriz_resultante;
+	}
+
 
 	/**
 	 * Transpose.
