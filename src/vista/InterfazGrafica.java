@@ -514,4 +514,22 @@ public class InterfazGrafica {
 	public void addListenerAccionRotacion(ActionListener ListenForRotacion) {
 		accion_herramientas_rotacion.addActionListener(ListenForRotacion);
 	}
+	
+	/**
+	 * Adds the listener accion escalado vmp.
+	 *
+	 * @param ListenForEscaladoVMP the listen for escalado vmp
+	 */
+	public void addListenerAccionEscaladoVMP(ActionListener ListenForEscaladoVMP) {
+		accion_herramientas_escalado_vmp.addActionListener(ListenForEscaladoVMP);
+	}
+	
+	/**
+	 * Adds the listener accion escalado bilinear.
+	 *
+	 * @param ListenForEscaladoBilinear the listen for escalado bilinear
+	 */
+	public void addListenerAccionEscaladoBilinear(ActionListener ListenForEscaladoBilinear) {
+		accion_herramientas_escalado_bilinear.addActionListener(ListenForEscaladoBilinear);
+	}
 }
