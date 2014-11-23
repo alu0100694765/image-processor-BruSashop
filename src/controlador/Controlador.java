@@ -30,6 +30,7 @@ import vista.PintarImagen;
 import vista.PlotHistograma;
 import vista.SeleccionAngulo;
 import vista.SeleccionDigitalizacion;
+import vista.SeleccionDimensiones;
 import vista.SeleccionGamma;
 import vista.SeleccionImagenEspecifica;
 import vista.SeleccionUmbral;
@@ -102,6 +103,8 @@ public class Controlador {
 				.addListenerAccionTraspuestaImagen(new AccionTraspuestaImagenListener());
 		this.interfazGrafica
 				.addListenerAccionRotacion(new AccionRotacionListener());
+		this.interfazGrafica
+				.addListenerAccionEscaladoVMP(new AccionEscaladaVMPListener());
 	}
 
 	/**
@@ -1079,7 +1082,7 @@ public class Controlador {
 			// TODO Auto-generated method stub
 			SeleccionAngulo angulo = new SeleccionAngulo();
 			angulo.pedirAngulo();
-			
+
 			Imagenes imagen_rotacion = new Imagenes();
 			imagen_rotacion.setImagen(manipulador.rotacion(
 					manipulador.getAcumulador_imagenes()
@@ -1093,6 +1096,35 @@ public class Controlador {
 					manipulador));
 
 		}
+	}
+
+	public class AccionEscaladaVMPListener implements ActionListener {
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			SeleccionDimensiones dimensiones = new SeleccionDimensiones();
+			dimensiones.pedirDimensiones(
+					manipulador.getAcumulador_imagenes()
+							.get(manipulador.getImagen_actual()).getImagen()
+							.getWidth(), manipulador.getAcumulador_imagenes()
+							.get(manipulador.getImagen_actual()).getImagen()
+							.getHeight());
+
+			Imagenes imagen_escalada = new Imagenes();
+			imagen_escalada.setImagen(manipulador.escaladoVMP(
+					manipulador.getAcumulador_imagenes()
+							.get(manipulador.getImagen_actual()).getImagen(),
+					dimensiones.getWidth(), dimensiones.getHeigth()));
+
+			manipulador.crearImagen(imagen_escalada);
+
+			PintarImagen nueva_pintura = new PintarImagen(manipulador);
+			nueva_pintura.addWindowListenerFrame(new WindowActiveListener(
+					manipulador));
+
+		}
+
 	}
 
 }

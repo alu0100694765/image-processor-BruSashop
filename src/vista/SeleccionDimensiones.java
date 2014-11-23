@@ -3,7 +3,7 @@
  */
 package vista;
 
-import java.awt.BorderLayout;
+import java.awt.GridLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -43,15 +43,15 @@ public class SeleccionDimensiones {
 	}
 	
 	public void pedirDimensiones(int w, int h){
-		panel = new JPanel(new BorderLayout());
+		panel = new JPanel(new GridLayout(0, 2));
 
 		selectionLabel = new JLabel("Introduzca las nuevas dimensiones ancho x largo. Las dimensiones actuales son " + Integer.toString(w) + " x " + Integer.toString(h));
-		panel.add(selectionLabel, BorderLayout.CENTER);
+		panel.add(selectionLabel);
 
-		text_w = new JTextField();
-		text_h = new JTextField();
-		panel.add(text_w, BorderLayout.SOUTH);
-		panel.add(text_h, BorderLayout.SOUTH);
+		text_w = new JTextField(20);
+		text_h = new JTextField(20);
+		panel.add(text_w);
+		panel.add(text_h);
 
 		int selectionUmbral = JOptionPane.showOptionDialog(null, panel,
 				"Seleccion Dimensiones", JOptionPane.OK_OPTION,
