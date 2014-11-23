@@ -105,6 +105,7 @@ public class Controlador {
 				.addListenerAccionRotacion(new AccionRotacionListener());
 		this.interfazGrafica
 				.addListenerAccionEscaladoVMP(new AccionEscaladaVMPListener());
+		this.interfazGrafica.addListenerAccionEscaladoBilinear(new AccionEscaladoBilinealListener());
 	}
 
 	/**
@@ -1124,7 +1125,34 @@ public class Controlador {
 					manipulador));
 
 		}
+	}
+	
+	public class AccionEscaladoBilinealListener implements ActionListener {
 
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			// TODO Auto-generated method stub
+			SeleccionDimensiones dimensiones = new SeleccionDimensiones();
+			dimensiones.pedirDimensiones(
+					manipulador.getAcumulador_imagenes()
+							.get(manipulador.getImagen_actual()).getImagen()
+							.getWidth(), manipulador.getAcumulador_imagenes()
+							.get(manipulador.getImagen_actual()).getImagen()
+							.getHeight());
+
+			Imagenes imagen_escalada = new Imagenes();
+			imagen_escalada.setImagen(manipulador.escaladoBilineal(
+					manipulador.getAcumulador_imagenes()
+							.get(manipulador.getImagen_actual()).getImagen(),
+					dimensiones.getWidth(), dimensiones.getHeigth()));
+
+			manipulador.crearImagen(imagen_escalada);
+
+			PintarImagen nueva_pintura = new PintarImagen(manipulador);
+			nueva_pintura.addWindowListenerFrame(new WindowActiveListener(
+					manipulador));
+		}
+		
 	}
 
 }
