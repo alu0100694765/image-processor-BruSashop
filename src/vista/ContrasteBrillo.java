@@ -207,7 +207,7 @@ public class ContrasteBrillo {
 		double valor_b = getB(valor_t, brillo_actual, valor_a);
 		
 		for (int v_in = 0; v_in < LUT.length; v_in++) {
-			LUT[v_in] = (int) ((int) valor_a * v_in + valor_b);
+			LUT[v_in] = (int) ((int) (valor_a * v_in) + valor_b);
 			if (LUT[v_in] < 0) {
 				LUT[v_in] = Imagenes.MIN_VALOR_PIXEL;
 			} else if (LUT[v_in] > Imagenes.MAX_VALOR_PIXEL) {
