@@ -85,6 +85,8 @@ public class Perfil implements MouseListener, MouseMotionListener {
 	private JPanel chartPanel;
 	private JPanel charJPanel;
 	
+	private ArrayList<Integer> points;
+	
 	/** The chart. */
 	private JFreeChart chart;
 	
@@ -109,6 +111,7 @@ public class Perfil implements MouseListener, MouseMotionListener {
 		y_points = new ArrayList<Integer>();
 		x_derivative_points = new ArrayList<Integer>();
 		y_derivative_points = new ArrayList<Integer>();
+		points = new ArrayList<Integer>();
 		
 		panel_imagen = new JPanel();
 		panel_imagen.setBounds(5, 8, imagen.getWidth(), imagen.getHeight());
@@ -254,7 +257,7 @@ public class Perfil implements MouseListener, MouseMotionListener {
 		} else {
 			bresenhamPoints(startX, endX, startY, endY);
 		}
-		coordenadas_puntos = createChartData(x_points, y_points);
+		coordenadas_puntos = createChartData(x_points, y_points, points);
 		getDerivativePoints();
 		coordenadas_derivada = createChartDataDerivative(x_derivative_points, y_derivative_points);
 		//showMatrix();
@@ -313,16 +316,21 @@ public class Perfil implements MouseListener, MouseMotionListener {
 
 		int y = y0;
 
+		int contador_puntos = 1;
+		
 		for (int x = x0; x <= x1; x++) {
 			x_points.add(x);
 			y_points.add(y);
 
+			points.add(contador_puntos);
 			
 			error = error + delta_error;
 			if (error >= MAX_ERROR) {
 				y++;
 				error--;
 			}
+			
+			contador_puntos++;
 		}
 
 	}
@@ -431,20 +439,21 @@ public class Perfil implements MouseListener, MouseMotionListener {
 	 * @param y_points the y_points
 	 * @return the double[][]
 	 */
-	public double[][] createChartData(ArrayList<Integer> x_points, ArrayList<Integer> y_points) {
+	public double[][] createChartData(ArrayList<Integer> x_points, ArrayList<Integer> y_points, ArrayList<Integer> points) {
 		double[][] data  = new double[x_points.size()][2];
 		
 		Iterator<Integer> x_iterator = x_points.iterator();
 		Iterator<Integer> y_iterator = y_points.iterator();
+		Iterator<Integer> points_iterator = points.iterator();
 		
 		int i = 0;
 		
-		while (x_iterator.hasNext() && y_iterator.hasNext()) {
+		while (x_iterator.hasNext() && y_iterator.hasNext() && points_iterator.hasNext()) {
 			int x_value = x_iterator.next();
 			int y_value = y_iterator.next();
+			int points_value = points_iterator.next();
 			
-			
-			data[i][0] = x_value;
+			data[i][0] = points_value;
 			data[i][1] = Imagenes.getRedPoint(imagen, x_value, y_value);
 			i++;
 		}
