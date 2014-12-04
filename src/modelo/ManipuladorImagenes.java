@@ -786,9 +786,7 @@ public class ManipuladorImagenes {
 	public BufferedImage escaladoBilineal(BufferedImage img, int new_width, int new_heigth) {
 		BufferedImage imagen_escalada;
 		
-		int[][] matriz_imagen_escalada = algoritmoBilinear(img, new_width, new_heigth);
-		
-		imagen_escalada = Imagenes.deepCopy(Imagenes.crearImagenMatriz(matriz_imagen_escalada));
+		imagen_escalada = Imagenes.deepCopy(algoritmoBilinear(img, new_width, new_heigth));
 		
 		return imagen_escalada;
 	}
@@ -801,63 +799,72 @@ public class ManipuladorImagenes {
 	 * @param new_heigth the new_heigth
 	 * @return the int[][]
 	 */
-	public int[][] algoritmoBilinear(BufferedImage img, int new_width,
+	public BufferedImage algoritmoBilinear(BufferedImage img, int new_width,
 			int new_heigth) {
+		Imagenes antigua_imagen = new Imagenes();
+		antigua_imagen.setImagen(img);
+		
+		Imagenes nueva_imagen = new Imagenes();
+		nueva_imagen.setImagen(new BufferedImage(new_width, 
+				new_heigth, img.getType()));
+		
 		// Calculo de factores del escalado
-		float factor_ancho = (float) (new_width / img.getWidth());
-		float factor_alto = (float) (new_heigth / img.getHeight());
+		float factor_ancho = (float) ((float)new_width / (float)img.getWidth());
+		float factor_alto = (float) ((float)new_heigth / (float)img.getHeight());
 
 		// Matriz de la imagen y la matriz resultante
-		int[][] matriz_imagen = Imagenes.getPixelMatrix(img);
-		int[][] matriz_resultante = new int[new_width][new_heigth];
+		//int[][] matriz_imagen = Imagenes.getPixelMatrix(img);
+		//int[][] matriz_resultante = new int[new_width][new_heigth];
 
 		// Puntos de refencia
-		int A, B, C, D;
+		int A, B, C, D, P;
+		float p, q;
 
 		for (int i = 0; i < new_width; i++) {
 			for (int j = 0; j < new_heigth; j++) {
 
 				float px, py;
+				int p_x, p_y;
 
 				// Transformacion inversa
 				px = i / factor_ancho;
 				py = j / factor_alto;
+				
+				p_x = (int)px;
+				p_y = (int)py;
+				
+				if((p_x == 0 || p_x == img.getWidth() - 1) && (p_y == 0) || p_y == img.getHeight() - 1 )
+					antigua_imagen.setPixelUnitGrey(p_x, p_y, 
+							antigua_imagen.getBluePoint(p_x, p_y));
 
-				// Vecinos alrededor
-				//  PX			  PX1
-				int px_izquierda, px_derecha;
-				int py_izquierda, py_derecha;
-
-				px_izquierda = (int) Math.floor(px);
-				px_derecha = (int) Math.ceil(px);
-				py_izquierda = (int) Math.floor(py);
-				py_derecha = (int) Math.ceil(py);
-
-				if ((int) px_derecha == (int) img.getWidth()) {
-					px_derecha--;
-				}
-
-				if ((int) py_derecha == (int) img.getHeight()) {
-					py_derecha--;
-				}
-
-				// Calculo de puntos proximos
-				A = matriz_imagen[px_izquierda][py_derecha];
-				B = matriz_imagen[px_derecha][py_derecha];
-				C = matriz_imagen[px_izquierda][py_izquierda];
-				D = matriz_imagen[px_derecha][py_izquierda];
-
-				float p = px - px_izquierda;
-				float q = py - py_izquierda;
-
-				int valor_pixel = (int) (C + (D - C) * p + (A - C) * q + (B + C
-						- A - D)
-						* p * q);
-				matriz_resultante[i][j] = valor_pixel;
+				if(p_x + 1 >= img.getWidth())
+					p_x--;
+				if(p_y + 1 >= img.getHeight())
+					p_y--;
+				
+				C = antigua_imagen.getBluePoint(p_x, p_y);
+				D = antigua_imagen.getBluePoint(p_x + 1, p_y);
+				A = antigua_imagen.getBluePoint(p_x, p_y + 1);
+				B = antigua_imagen.getBluePoint(p_x + 1, p_y + 1);
+				p = (px + 1) - ((int)px);
+				q = (py + 1) - ((int)py);
+				
+				P = Math.round(C + ((D - C) * p) + ((A - C) * q) + ((B + C - A - D) * p * q));
+				
+				if(P < 0)
+					P = 0;
+				if(P > 255)
+					P = 255;
+				
+				/*System.out.println("PX: " + p_x + " PY: " + p_y);
+				System.out.println("A: " + A + ", B: " + B + ", C: " + C + ", D: " + D);
+				System.out.println("P: " + P);*/
+				
+				nueva_imagen.setPixelUnitGrey(i, j, P);
 			}
 		}
 
-		return matriz_resultante;
+		return nueva_imagen.getImagen();
 	}
 	
 	/**
