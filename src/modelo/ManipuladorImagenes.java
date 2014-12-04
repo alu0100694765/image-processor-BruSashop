@@ -769,9 +769,7 @@ public class ManipuladorImagenes {
 	public BufferedImage escaladoVMP(BufferedImage img, int new_width, int new_heigth) {
 		BufferedImage imagen_escalada;
 		
-		int[][] matriz_imagen_escalada = VMP(img, new_width, new_heigth);
-		
-		imagen_escalada = Imagenes.deepCopy(Imagenes.crearImagenMatriz(matriz_imagen_escalada));
+		imagen_escalada = Imagenes.deepCopy(VMP(img, new_width, new_heigth));
 		
 		return imagen_escalada;
 	}
@@ -868,66 +866,42 @@ public class ManipuladorImagenes {
 	 * @param img the img
 	 * @param new_width the new_widht
 	 * @param new_heigth the new_height
-	 * @return the int[][]
+	 * @return the bufferedImage
 	 */
-	public int[][] VMP(BufferedImage img, int new_width, int new_heigth) {
+	public BufferedImage VMP(BufferedImage img, int new_width, int new_heigth) {
+		Imagenes antigua_imagen = new Imagenes();
+		antigua_imagen.setImagen(img);
+		
+		Imagenes nueva_imagen = new Imagenes();
+		nueva_imagen.setImagen(new BufferedImage(new_width, 
+				new_heigth, img.getType()));
+		
 		// Calculo del factor de escalado
-		float factor_ancho = (float) (new_width / img.getWidth());
-		float factor_alto = (float) (new_heigth / img.getHeight());
-
-		// Calculo de la matriz de la imagen y de la matriz resultante
-		int[][] matriz_imagen = Imagenes.getPixelMatrix(img);
-		int[][] matriz_resultante = new int[new_width][new_heigth];
+		float factor_ancho = (float) ((float)new_width / (float)img.getWidth());
+		float factor_alto = (float) ((float)new_heigth / (float)img.getHeight());
 
 		for (int i = 0; i < new_width; i++) {
 			for (int j = 0; j < new_heigth; j++) {
 
-				float px, py;
+				int px, py;
 
 				// Transformacion Inversa
-				px = i / factor_ancho;
-				py = j / factor_alto;
+				px = Math.round(i / factor_ancho);
+				py = Math.round(j / factor_alto);
+				
+				if(px >= img.getWidth())
+					px--;
+				
+				if(py >= img.getHeight())
+					py--;
+				
+				nueva_imagen.setPixelUnitGrey(i, j, 
+						antigua_imagen.getBluePoint(px, py));
 
-				// Localizacion del vecino mas proximo
-				int proximo_x_izquierda, proximo_x_derecha;
-				int proximo_y_izquierda, proximo_y_derecha;
-
-				// Math floor devuelve el vecino mas proximo hacia -infinito
-				// Math ceil devuelve el vecino mas proximo hacia el +infinito
-				proximo_x_izquierda = (int) Math.floor(px);
-				proximo_x_derecha = (int) Math.ceil(px);
-				proximo_y_izquierda = (int) Math.floor(py);
-				proximo_y_derecha = (int) Math.ceil(py);
-
-				// Obteniendo vecinos en el eje Y
-				if ((px - proximo_x_izquierda) < (proximo_x_derecha - px)) {
-					px = proximo_x_izquierda;
-				} else {
-					px = proximo_x_derecha;
-				}
-
-				// Obteniendo vecinos en el eje X
-				if ((py - proximo_y_izquierda) < (proximo_y_derecha - py)) {
-					py = proximo_y_izquierda;
-				} else {
-					py = proximo_y_derecha;
-				}
-
-				// Comprobacion de posibles fueras de rangos
-				if ((int) px >= img.getWidth()) {
-					px = (float) (img.getWidth() - 1);
-				}
-
-				if ((int) py >= img.getHeight()) {
-					py = (float) (img.getHeight() - 1);
-				}
-
-				// Realizando el mapeo de la imagen
-				matriz_resultante[i][j] = matriz_imagen[(int) px][(int) py];
 			}
 		}
 
-		return matriz_resultante;
+		return nueva_imagen.getImagen();
 	}
 
 

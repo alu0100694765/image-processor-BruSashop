@@ -610,6 +610,11 @@ public class Imagenes {
 		imagen.setRGB(posX, posY, color.getRGB());
 	}
 	
+	public void setPixelUnitGrey(int posX, int posY, int grey){
+		Color color = new Color(grey, grey, grey);
+		imagen.setRGB(posX, posY, color.getRGB());
+	}
+	
 	/**
 	 * Sets the pixel unit image.
 	 *
