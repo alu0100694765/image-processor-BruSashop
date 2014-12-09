@@ -812,10 +812,6 @@ public class ManipuladorImagenes {
 		float factor_ancho = (float) ((float)new_width / (float)img.getWidth());
 		float factor_alto = (float) ((float)new_heigth / (float)img.getHeight());
 
-		// Matriz de la imagen y la matriz resultante
-		//int[][] matriz_imagen = Imagenes.getPixelMatrix(img);
-		//int[][] matriz_resultante = new int[new_width][new_heigth];
-
 		// Puntos de refencia
 		int A, B, C, D, P;
 		float p, q;
@@ -826,7 +822,6 @@ public class ManipuladorImagenes {
 				float px, py;
 				int p_x, p_y;
 
-				// Transformacion inversa
 				px = i / factor_ancho;
 				py = j / factor_alto;
 				
@@ -846,19 +841,10 @@ public class ManipuladorImagenes {
 				D = antigua_imagen.getBluePoint(p_x + 1, p_y);
 				A = antigua_imagen.getBluePoint(p_x, p_y + 1);
 				B = antigua_imagen.getBluePoint(p_x + 1, p_y + 1);
-				p = (px + 1) - ((int)px);
-				q = (py + 1) - ((int)py);
+				p = px - ((int)px);
+				q = py - ((int)py);
 				
 				P = Math.round(C + ((D - C) * p) + ((A - C) * q) + ((B + C - A - D) * p * q));
-				
-				if(P < 0)
-					P = 0;
-				if(P > 255)
-					P = 255;
-				
-				/*System.out.println("PX: " + p_x + " PY: " + p_y);
-				System.out.println("A: " + A + ", B: " + B + ", C: " + C + ", D: " + D);
-				System.out.println("P: " + P);*/
 				
 				nueva_imagen.setPixelUnitGrey(i, j, P);
 			}
