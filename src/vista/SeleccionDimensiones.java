@@ -3,7 +3,9 @@
  */
 package vista;
 
-import java.awt.GridLayout;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -43,13 +45,13 @@ public class SeleccionDimensiones {
 	}
 	
 	public void pedirDimensiones(int w, int h){
-		panel = new JPanel(new GridLayout(0, 2));
-
-		selectionLabel = new JLabel("Introduzca las nuevas dimensiones ancho x largo. Las dimensiones actuales son " + Integer.toString(w) + " x " + Integer.toString(h));
+		panel = new JPanel(new GridBagLayout());
+		
+		selectionLabel = new JLabel("Introduzca las nuevas dimensiones ancho x largo. Las dimensiones actuales son " + Integer.toString(w) + " x " + Integer.toString(h) + "  ");
 		panel.add(selectionLabel);
 
-		text_w = new JTextField(20);
-		text_h = new JTextField(20);
+		text_w = new JTextField(10);
+		text_h = new JTextField(10);
 		panel.add(text_w);
 		panel.add(text_h);
 
