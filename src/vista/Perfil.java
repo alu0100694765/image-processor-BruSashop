@@ -142,6 +142,7 @@ public class Perfil implements MouseListener, MouseMotionListener {
 		scrollpane.setPreferredSize(new Dimension(1300, 750));
 		scrollpane.setVisible(true);
 
+		@SuppressWarnings("unused")
 		int option_value = JOptionPane.showOptionDialog(null, scrollpane,
 				TITULO, JOptionPane.PLAIN_MESSAGE,
 				JOptionPane.OK_CANCEL_OPTION, null, null, null);

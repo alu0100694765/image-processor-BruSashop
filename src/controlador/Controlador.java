@@ -944,6 +944,7 @@ public class Controlador {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			// TODO Auto-generated method stub
+			@SuppressWarnings("unused")
 			Perfil perfil = new Perfil(manipulador.getAcumulador_imagenes()
 					.get(manipulador.getImagen_actual()).getImagen());
 		}
