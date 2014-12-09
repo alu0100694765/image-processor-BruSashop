@@ -119,6 +119,14 @@ public class InterfazGrafica {
 	/** The Constant ESCALADO_BILINEAR. */
 	public final static String ESCALADO_BILINEAR = "Escalado bilinear";
 	
+	public final static String OPERACIONES_LINEALES = "Operaciones lineales";
+	
+	public final static String OPERACIONES_NO_LINEALES = "Operaciones no lineales";
+	
+	public final static String ROTACIONES = "Rotaciones";
+	
+	public final static String ESCALADOS = "Escalados";
+	
 	/** The frame. */
 	public JFrame frame;
 
@@ -209,6 +217,16 @@ public class InterfazGrafica {
 	/** The accion_herramientas_escalado_bilinear. */
 	public JMenuItem accion_herramientas_escalado_bilinear;
 	
+	public JMenu submenu_histogramas;
+	
+	public JMenu submenu_operaciones_lineales;
+	
+	public JMenu submenu_operaciones_no_lineales;
+	
+	public JMenu submenu_rotaciones;
+	
+	public JMenu submenu_escalados;
+	
 	/**
 	 * Instantiates a new interfaz grafica.
 	 */
@@ -224,7 +242,21 @@ public class InterfazGrafica {
 		menu_editar = new JMenu(EDITAR);
 		menu_ayuda = new JMenu(AYUDA);
 		menu_herramientas = new JMenu(HERRAMIENTAS);
-
+		
+		// Inicializando submenus
+		submenu_histogramas = new JMenu(HISTOGRAMA);
+		submenu_operaciones_lineales = new JMenu(OPERACIONES_LINEALES);
+		submenu_operaciones_no_lineales = new JMenu(OPERACIONES_NO_LINEALES);
+		submenu_rotaciones = new JMenu(ROTACIONES);
+		submenu_escalados = new JMenu(ESCALADOS);
+		
+		// Aniadiendo submenus a sus menus correspondientes
+		addToSubMenu(menu_herramientas, submenu_histogramas);
+		addToSubMenu(menu_herramientas, submenu_operaciones_lineales);
+		addToSubMenu(menu_herramientas, submenu_operaciones_no_lineales);
+		addToSubMenu(menu_herramientas, submenu_rotaciones);
+		addToSubMenu(menu_herramientas, submenu_escalados);
+		
 		// Añadiendo menus a la barra
 		addToBarraAcciones(menu_archivo);
 		addToBarraAcciones(menu_editar);
@@ -272,25 +304,31 @@ public class InterfazGrafica {
 		menu_archivo.add(acciones_guardar_archivo);
 		menu_archivo.add(acciones_archivo_salir);
 		menu_ayuda.add(acciones_ayuda_acercade);
-		menu_herramientas.add(acciones_herramientas_histograma);
-		menu_herramientas.add(acciones_herramientas_histograma_acumulativo);
+		
+		submenu_histogramas.add(acciones_herramientas_histograma);
+		submenu_histogramas.add(acciones_herramientas_histograma_acumulativo);
+		
+		submenu_operaciones_lineales.add(acciones_herramientas_tft);
+		submenu_operaciones_lineales.add(acciones_herramientas_contraste_brillo);
+		submenu_operaciones_lineales.add(acciones_herramientas_binarizar);
+		
+		submenu_operaciones_no_lineales.add(acciones_herramientas_ecualizar_histograma);
+		submenu_operaciones_no_lineales.add(acciones_herramientas_especificar_histograma);
+		submenu_operaciones_no_lineales.add(acciones_herramientas_correccion_gamma);
+		
+		submenu_rotaciones.add(accion_herramientas_espejo_vertical);
+		submenu_rotaciones.add(accion_herramientas_espejo_horizontal);
+		submenu_rotaciones.add(accion_herramientas_traspuesta_imagen);
+		submenu_rotaciones.add(accion_herramientas_rotacion);
+		
+		submenu_escalados.add(accion_herramientas_escalado_vmp);
+		submenu_escalados.add(accion_herramientas_escalado_bilinear);
+		
 		menu_herramientas.add(acciones_herramientas_monocromo);
-		menu_herramientas.add(acciones_herramientas_ecualizar_histograma);
-		menu_herramientas.add(acciones_herramientas_especificar_histograma);
-		menu_herramientas.add(acciones_herramientas_correccion_gamma);
 		menu_herramientas.add(acciones_herramientas_entropia);
 		menu_herramientas.add(acciones_herramientas_diferencia_imagenes);
 		menu_herramientas.add(acciones_herramientas_digitalizacion);
-		menu_herramientas.add(acciones_herramientas_contraste_brillo);
-		menu_herramientas.add(acciones_herramientas_binarizar);
-		menu_herramientas.add(acciones_herramientas_tft);
 		menu_herramientas.add(accion_herramientas_perfil);
-		menu_herramientas.add(accion_herramientas_espejo_vertical);
-		menu_herramientas.add(accion_herramientas_espejo_horizontal);
-		menu_herramientas.add(accion_herramientas_traspuesta_imagen);
-		menu_herramientas.add(accion_herramientas_rotacion);
-		menu_herramientas.add(accion_herramientas_escalado_vmp);
-		menu_herramientas.add(accion_herramientas_escalado_bilinear);
 		menu_editar.add(acciones_editar_region_interes);
 		
 		
@@ -315,6 +353,9 @@ public class InterfazGrafica {
 		barra_acciones.add(componente);
 	}
 
+	public void addToSubMenu(JMenu menu, JMenu submenu) {
+		menu.add(submenu);
+	}
 
 	/**
 	 * Listeners de los items de los menus.
