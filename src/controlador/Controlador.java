@@ -390,9 +390,24 @@ public class Controlador {
 			manipulador.setImagen_actual(id);
 			if (manipulador.getAcumulador_imagenes().get(id).esMonocromo()) {
 				interfazGrafica.acciones_herramientas_entropia.setEnabled(true);
+				interfazGrafica.submenu_operaciones_lineales.setEnabled(true);
+				interfazGrafica.submenu_operaciones_no_lineales.setEnabled(true);
+				interfazGrafica.submenu_escalados.setEnabled(true);
+				interfazGrafica.submenu_rotaciones.setEnabled(true);
+				interfazGrafica.acciones_herramientas_diferencia_imagenes.setEnabled(true);
+				interfazGrafica.acciones_herramientas_digitalizacion.setEnabled(true);
+				interfazGrafica.accion_herramientas_perfil.setEnabled(true);
+
 			} else {
 				interfazGrafica.acciones_herramientas_entropia
 						.setEnabled(false);
+				interfazGrafica.submenu_operaciones_lineales.setEnabled(false);
+				interfazGrafica.submenu_operaciones_no_lineales.setEnabled(false);
+				interfazGrafica.submenu_escalados.setEnabled(false);
+				interfazGrafica.submenu_rotaciones.setEnabled(false);
+				interfazGrafica.acciones_herramientas_diferencia_imagenes.setEnabled(false);
+				interfazGrafica.acciones_herramientas_digitalizacion.setEnabled(false);
+				interfazGrafica.accion_herramientas_perfil.setEnabled(false);
 			}
 		}
 
