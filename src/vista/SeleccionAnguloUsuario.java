@@ -33,7 +33,7 @@ public class SeleccionAnguloUsuario {
 	public void pedirAngulo(){
 		panel = new JPanel(new GridBagLayout());
 		
-		selectionLabel = new JLabel("Introduzca El ángulo de rotación deseado ");
+		selectionLabel = new JLabel("Introduzca El angulo de rotacin deseado ");
 		panel.add(selectionLabel);
 
 		angulo = new JTextField(3);
