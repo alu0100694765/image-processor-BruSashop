@@ -338,7 +338,16 @@ public class InterfazGrafica {
 		menu_editar.add(acciones_editar_region_interes);
 		
 		
+		// Conjunto de operaciones que solo seran disponibles para imagenes a escala de 
+		// grises
 		acciones_herramientas_entropia.setEnabled(false);
+		submenu_operaciones_lineales.setEnabled(false);
+		submenu_operaciones_no_lineales.setEnabled(false);
+		submenu_escalados.setEnabled(false);
+		submenu_rotaciones.setEnabled(false);
+		acciones_herramientas_diferencia_imagenes.setEnabled(false);
+		acciones_herramientas_digitalizacion.setEnabled(false);
+		accion_herramientas_perfil.setEnabled(false);
 
 		frame.setSize(600, 340);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
