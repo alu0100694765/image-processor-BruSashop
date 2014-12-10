@@ -1036,31 +1036,43 @@ public class ManipuladorImagenes {
 		nueva_imagen.setImagen(new BufferedImage(width, 
 				height, antigua_imagen.getImagen().getType()));
 		
-		float x_min_bucle = (float) x_min;
-		float y_min_bucle = (float) y_min;
+		float sin;
+		float cos;
 		
 		float transformada_x, transformada_y;
 		
-		for(int i = 0; i < nueva_imagen.getImagen().getWidth(); i++){
-			y_min_bucle = (float) y_min;
-			for(int j = 0; j < nueva_imagen.getImagen().getHeight(); j++){	
-				transformada_x = (float)((Math.cos(angulo)*x_min_bucle)
-						+ (-Math.sin(angulo)*y_min_bucle));
+		for(int i = 0; i < nueva_imagen.getImagen().getWidth(); i++)
+			for(int j = 0; j < nueva_imagen.getImagen().getHeight(); j++)
+				nueva_imagen.setPixelToWhite(i, j);
+			
+		
+		for(int i = 0; i < antigua_imagen.getImagen().getWidth(); i++){
+			for(int j = 0; j < antigua_imagen.getImagen().getHeight(); j++){	
+				sin = (float) (-Math.sin(angulo)*j);
+				cos = (float) (Math.cos(angulo)*i);
 				
-				transformada_y = (float)((Math.sin(angulo)*x_min_bucle)
-						+ (Math.cos(angulo)*y_min_bucle));
+				transformada_x = cos + sin;
+				transformada_x = (float) (transformada_x + Math.abs(x_min));
 				
-				if(transformada_x < 0 || transformada_y < 0 ||
-						transformada_x > antigua_imagen.getImagen().getWidth() ||
-						transformada_y > antigua_imagen.getImagen().getHeight())
-					nueva_imagen.setPixelToWhite(i, j);
-				else
-					nueva_imagen.setPixelUnitGrey(i, j, colorBilineal(transformada_x,
-							transformada_y, antigua_imagen));
+				if(Math.round(Math.abs(transformada_x)) >= nueva_imagen.getImagen().getWidth())
+					transformada_x = nueva_imagen.getImagen().getWidth() - 1;
 				
-				y_min_bucle++;
+				sin = (float) (Math.sin(angulo)*i);
+				cos = (float) (Math.cos(angulo)*j);
+				
+				transformada_y = sin + cos;
+				transformada_y = (float) (transformada_y + Math.abs(y_min));
+				
+				if(Math.round(Math.abs(transformada_y)) >= nueva_imagen.getImagen().getHeight())
+					transformada_y = nueva_imagen.getImagen().getHeight() - 1;
+				
+				if(transformada_x > 0 && transformada_y > 0 &&
+						transformada_x < nueva_imagen.getImagen().getWidth() &&
+						transformada_y < nueva_imagen.getImagen().getHeight())
+					nueva_imagen.setPixelUnitGrey(Math.round(Math.abs(transformada_x)), 
+							Math.round(Math.abs(transformada_y)),
+							colorBilineal(i, j, antigua_imagen));
 			}
-			x_min_bucle++;
 		}
 		
 		return nueva_imagen.getImagen();
