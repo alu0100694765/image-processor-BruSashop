@@ -791,14 +791,6 @@ public class ManipuladorImagenes {
 		return imagen_escalada;
 	}
 	
-	public BufferedImage rotacionPersonalizada(Imagenes antigua_imagen, double angulo){
-		BufferedImage imagen_rotada;
-		
-		imagen_rotada = Imagenes.deepCopy(algoritmoRotacion(antigua_imagen, angulo));
-		
-		return imagen_rotada;
-	}
-	
 	/**
 	 * Algoritmo bilinear.
 	 *
@@ -906,7 +898,7 @@ public class ManipuladorImagenes {
 		return antigua_imagen.getBluePoint(px, py);
 	}
 
-	public BufferedImage algoritmoRotacion(Imagenes antigua_imagen, double angulo){
+	public BufferedImage algoritmoRotacion_I(Imagenes antigua_imagen, double angulo){
 		Imagenes nueva_imagen = new Imagenes();
 		
 		//Recogiendo los puntos 
@@ -972,6 +964,90 @@ public class ManipuladorImagenes {
 						+ (Math.sin(angulo)*y_min_bucle));
 				
 				transformada_y = (float)((-Math.sin(angulo)*x_min_bucle)
+						+ (Math.cos(angulo)*y_min_bucle));
+				
+				if(transformada_x < 0 || transformada_y < 0 ||
+						transformada_x > antigua_imagen.getImagen().getWidth() ||
+						transformada_y > antigua_imagen.getImagen().getHeight())
+					nueva_imagen.setPixelToWhite(i, j);
+				else
+					nueva_imagen.setPixelUnitGrey(i, j, colorBilineal(transformada_x,
+							transformada_y, antigua_imagen));
+				
+				y_min_bucle++;
+			}
+			x_min_bucle++;
+		}
+		
+		return nueva_imagen.getImagen();
+	}
+	
+	public BufferedImage algoritmoRotacion_D(Imagenes antigua_imagen, double angulo){
+		Imagenes nueva_imagen = new Imagenes();
+		
+		//Recogiendo los puntos 
+		double x, y;
+		
+		x = 0;
+		y = 0;
+		
+		double E[], F[], G[], H[];
+		
+		E = new double [2];
+		F = new double [2];
+		H = new double [2];
+		G = new double [2];
+		
+		angulo = Math.toRadians(angulo);
+		
+		E[0] = (Math.cos(angulo)*x) + (-Math.sin(angulo)*y);
+		E[1] = (Math.sin(angulo)*x) + (Math.cos(angulo)*y);
+		
+		y = antigua_imagen.getImagen().getHeight();
+
+		F[0] = (Math.cos(angulo)*x) + (-Math.sin(angulo)*y);
+		F[1] = (Math.sin(angulo)*x) + (Math.cos(angulo)*y);
+		
+		x = antigua_imagen.getImagen().getWidth();
+		y = 0;
+
+		H[0] = (Math.cos(angulo)*x) + (-Math.sin(angulo)*y);
+		H[1] = (Math.sin(angulo)*x) + (Math.cos(angulo)*y);
+		
+		x = antigua_imagen.getImagen().getWidth();
+		y = antigua_imagen.getImagen().getHeight();
+
+		G[0] = (Math.cos(angulo)*x) + (-Math.sin(angulo)*y);
+		G[1] = (Math.sin(angulo)*x) + (Math.cos(angulo)*y);
+		
+		int width, height;
+		double x_min, x_max, y_min, y_max;
+		x_min = x_max = y_min = y_max = 0;
+		
+		x_min = Math.min(E[0], Math.min(F[0], Math.min(H[0], G[0])));
+		x_max = Math.max(E[0], Math.max(F[0], Math.max(H[0], G[0])));
+		
+		y_min = Math.min(E[1], Math.min(F[1], Math.min(H[1], G[1])));
+		y_max = Math.max(E[1], Math.max(F[1], Math.max(H[1], G[1])));
+		
+		width = (int)(Math.abs(x_min) + Math.abs(x_max));
+		height = (int)(Math.abs(y_min) + Math.abs(y_max));
+		
+		nueva_imagen.setImagen(new BufferedImage(width, 
+				height, antigua_imagen.getImagen().getType()));
+		
+		float x_min_bucle = (float) x_min;
+		float y_min_bucle = (float) y_min;
+		
+		float transformada_x, transformada_y;
+		
+		for(int i = 0; i < nueva_imagen.getImagen().getWidth(); i++){
+			y_min_bucle = (float) y_min;
+			for(int j = 0; j < nueva_imagen.getImagen().getHeight(); j++){	
+				transformada_x = (float)((Math.cos(angulo)*x_min_bucle)
+						+ (-Math.sin(angulo)*y_min_bucle));
+				
+				transformada_y = (float)((Math.sin(angulo)*x_min_bucle)
 						+ (Math.cos(angulo)*y_min_bucle));
 				
 				if(transformada_x < 0 || transformada_y < 0 ||

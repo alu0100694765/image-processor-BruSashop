@@ -107,7 +107,8 @@ public class Controlador {
 		this.interfazGrafica
 				.addListenerAccionEscaladoVMP(new AccionEscaladaVMPListener());
 		this.interfazGrafica.addListenerAccionEscaladoBilinear(new AccionEscaladoBilinealListener());
-		this.interfazGrafica.addListenerRotacionUsuario(new AccionRotacionUsuarioListener());
+		this.interfazGrafica.addListenerRotacionUsuario_I(new AccionRotacionUsuario_I_Listener());
+		this.interfazGrafica.addListenerRotacionUsuario_D(new AccionRotacionUsuario_D_Listener());
 	}
 
 	/**
@@ -1161,7 +1162,7 @@ public class Controlador {
 		
 	}
 	
-	public class AccionRotacionUsuarioListener implements ActionListener{
+	public class AccionRotacionUsuario_I_Listener implements ActionListener{
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
@@ -1170,7 +1171,28 @@ public class Controlador {
 			
 			Imagenes imagen_rotada = new Imagenes();
 			
-			imagen_rotada.setImagen(manipulador.algoritmoRotacion(manipulador.getAcumulador_imagenes()
+			imagen_rotada.setImagen(manipulador.algoritmoRotacion_I(manipulador.getAcumulador_imagenes()
+					.get(manipulador.getImagen_actual()), angulo.getAngulo_()));
+			
+			manipulador.crearImagen(imagen_rotada);
+			
+			PintarImagen nueva_pintura = new PintarImagen(manipulador);
+			nueva_pintura.addWindowListenerFrame(new WindowActiveListener(
+					manipulador));
+		}
+		
+	}
+	
+	public class AccionRotacionUsuario_D_Listener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			SeleccionAnguloUsuario angulo = new SeleccionAnguloUsuario();
+			angulo.pedirAngulo();
+			
+			Imagenes imagen_rotada = new Imagenes();
+			
+			imagen_rotada.setImagen(manipulador.algoritmoRotacion_D(manipulador.getAcumulador_imagenes()
 					.get(manipulador.getImagen_actual()), angulo.getAngulo_()));
 			
 			manipulador.crearImagen(imagen_rotada);

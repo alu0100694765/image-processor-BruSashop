@@ -114,7 +114,9 @@ public class InterfazGrafica {
 	/** The Constant ROTACION. */
 	public final static String ROTACION = "Rotacion";
 	
-	private final static String ROTACION_USUARIO = "Rotacion personalizada";
+	private final static String ROTACION_USUARIO_I = "Rotacion personalizada (Inversa)";
+	
+	private final static String ROTACION_USUARIO_D = "Rotacion personalizada (Directa)";
 	
 	/** The Constant ESCALADO_VMP. */
 	public final static String ESCALADO_VMP = "Escalado VMP";
@@ -214,7 +216,9 @@ public class InterfazGrafica {
 	/** The accion_herramientas_rotacion. */
 	public JMenuItem accion_herramientas_rotacion;
 	
-	public JMenuItem accion_herramientas_rotacion_usuario;
+	public JMenuItem accion_herramientas_rotacion_usuario_I;
+	
+	public JMenuItem accion_herramientas_rotacion_usuario_D;
 	
 	/** The accion_herramientas_escalado_vmp. */
 	public JMenuItem accion_herramientas_escalado_vmp;
@@ -293,7 +297,8 @@ public class InterfazGrafica {
 		accion_herramientas_espejo_horizontal = new JMenuItem(ESPEJO_H);
 		accion_herramientas_traspuesta_imagen = new JMenuItem(TRASPUESTA);
 		accion_herramientas_rotacion = new JMenuItem(ROTACION);
-		accion_herramientas_rotacion_usuario = new JMenuItem(ROTACION_USUARIO);
+		accion_herramientas_rotacion_usuario_I = new JMenuItem(ROTACION_USUARIO_I);
+		accion_herramientas_rotacion_usuario_D = new JMenuItem(ROTACION_USUARIO_D);
 		accion_herramientas_escalado_vmp = new JMenuItem(ESCALADO_VMP);
 		accion_herramientas_escalado_bilinear = new JMenuItem(ESCALADO_BILINEAR);
 		
@@ -328,7 +333,8 @@ public class InterfazGrafica {
 		submenu_rotaciones.add(accion_herramientas_espejo_horizontal);
 		submenu_rotaciones.add(accion_herramientas_traspuesta_imagen);
 		submenu_rotaciones.add(accion_herramientas_rotacion);
-		submenu_rotaciones.add(accion_herramientas_rotacion_usuario);
+		submenu_rotaciones.add(accion_herramientas_rotacion_usuario_I);
+		submenu_rotaciones.add(accion_herramientas_rotacion_usuario_D);
 		
 		submenu_escalados.add(accion_herramientas_escalado_vmp);
 		submenu_escalados.add(accion_herramientas_escalado_bilinear);
@@ -592,7 +598,11 @@ public class InterfazGrafica {
 		accion_herramientas_escalado_bilinear.addActionListener(ListenForEscaladoBilinear);
 	}
 	
-	public void addListenerRotacionUsuario(ActionListener ListenForRotacionUsuario){
-		accion_herramientas_rotacion_usuario.addActionListener(ListenForRotacionUsuario);
+	public void addListenerRotacionUsuario_I(ActionListener ListenForRotacionUsuario){
+		accion_herramientas_rotacion_usuario_I.addActionListener(ListenForRotacionUsuario);
+	}
+	
+	public void addListenerRotacionUsuario_D(ActionListener ListenForRotacionUsuario){
+		accion_herramientas_rotacion_usuario_D.addActionListener(ListenForRotacionUsuario);
 	}
 }
