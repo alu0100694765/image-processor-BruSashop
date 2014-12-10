@@ -117,6 +117,7 @@ public class ManipuladorImagenes {
 	 */
 
 	public void plotHistograma() {
+		crearHistograma();
 		histograma.reinicioDatos();
 		histograma.getHistogram();
 		plotHistograma.plotHistograma();
@@ -890,16 +891,17 @@ public class ManipuladorImagenes {
 	
 	public int colorVMP(int px, int py, Imagenes antigua_imagen){
 		if(px >= antigua_imagen.getImagen().getWidth())
-			px--;
+			px = antigua_imagen.getImagen().getWidth() - 1;
 		
 		if(py >= antigua_imagen.getImagen().getHeight())
-			py--;
+			py = antigua_imagen.getImagen().getHeight() - 1;
 		
 		return antigua_imagen.getBluePoint(px, py);
 	}
 
-	public BufferedImage algoritmoRotacion_I(Imagenes antigua_imagen, double angulo){
+	public Imagenes algoritmoRotacion_I(Imagenes antigua_imagen, double angulo, boolean interp){
 		Imagenes nueva_imagen = new Imagenes();
+		nueva_imagen.setRotated();
 		
 		//Recogiendo los puntos 
 		double x, y;
@@ -938,6 +940,7 @@ public class ManipuladorImagenes {
 		
 		int width, height;
 		double x_min, x_max, y_min, y_max;
+		
 		x_min = x_max = y_min = y_max = 0;
 		
 		x_min = Math.min(E[0], Math.min(F[0], Math.min(H[0], G[0])));
@@ -957,6 +960,8 @@ public class ManipuladorImagenes {
 		
 		float transformada_x, transformada_y;
 		
+		int countedPixels = 0;
+		
 		for(int i = 0; i < nueva_imagen.getImagen().getWidth(); i++){
 			y_min_bucle = (float) y_min;
 			for(int j = 0; j < nueva_imagen.getImagen().getHeight(); j++){	
@@ -968,22 +973,31 @@ public class ManipuladorImagenes {
 				
 				if(transformada_x < 0 || transformada_y < 0 ||
 						transformada_x > antigua_imagen.getImagen().getWidth() ||
-						transformada_y > antigua_imagen.getImagen().getHeight())
+						transformada_y > antigua_imagen.getImagen().getHeight()){
 					nueva_imagen.setPixelToWhite(i, j);
-				else
-					nueva_imagen.setPixelUnitGrey(i, j, colorBilineal(transformada_x,
-							transformada_y, antigua_imagen));
+					countedPixels++;
+				}
+				else{
+					if(interp)
+						nueva_imagen.setPixelUnitGrey(i, j, colorBilineal(transformada_x,
+								transformada_y, antigua_imagen));
+					else
+						nueva_imagen.setPixelUnitGrey(i, j, colorVMP(Math.round(transformada_x),
+								Math.round(transformada_y), antigua_imagen));
+				}
 				
 				y_min_bucle++;
 			}
 			x_min_bucle++;
 		}
+		nueva_imagen.addCountedPixel(countedPixels);
 		
-		return nueva_imagen.getImagen();
+		return nueva_imagen;
 	}
 	
-	public BufferedImage algoritmoRotacion_D(Imagenes antigua_imagen, double angulo){
+	public Imagenes algoritmoRotacion_D(Imagenes antigua_imagen, double angulo, boolean interp){
 		Imagenes nueva_imagen = new Imagenes();
+		nueva_imagen.setRotated();
 		
 		//Recogiendo los puntos 
 		double x, y;
@@ -1036,10 +1050,11 @@ public class ManipuladorImagenes {
 		nueva_imagen.setImagen(new BufferedImage(width, 
 				height, antigua_imagen.getImagen().getType()));
 		
-		float sin;
-		float cos;
+		float sin, cos;
 		
 		float transformada_x, transformada_y;
+		
+		int paintedPixel = 0;
 		
 		for(int i = 0; i < nueva_imagen.getImagen().getWidth(); i++)
 			for(int j = 0; j < nueva_imagen.getImagen().getHeight(); j++)
@@ -1068,14 +1083,26 @@ public class ManipuladorImagenes {
 				
 				if(transformada_x > 0 && transformada_y > 0 &&
 						transformada_x < nueva_imagen.getImagen().getWidth() &&
-						transformada_y < nueva_imagen.getImagen().getHeight())
-					nueva_imagen.setPixelUnitGrey(Math.round(Math.abs(transformada_x)), 
-							Math.round(Math.abs(transformada_y)),
-							colorBilineal(i, j, antigua_imagen));
+						transformada_y < nueva_imagen.getImagen().getHeight()){
+					if(interp)
+						nueva_imagen.setPixelUnitGrey(Math.round(Math.abs(transformada_x)), 
+								Math.round(Math.abs(transformada_y)),
+								colorBilineal(i, j, antigua_imagen));
+					else
+						nueva_imagen.setPixelUnitGrey(Math.round(Math.abs(transformada_x)), 
+								Math.round(Math.abs(transformada_y)),
+								colorVMP(i, j, antigua_imagen));
+					
+					paintedPixel++;
+				}
 			}
 		}
 		
-		return nueva_imagen.getImagen();
+		paintedPixel = (width*height) - paintedPixel;
+		
+		nueva_imagen.addCountedPixel(paintedPixel);
+		
+		return nueva_imagen;
 	}
 
 	/**

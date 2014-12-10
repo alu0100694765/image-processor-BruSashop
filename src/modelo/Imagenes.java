@@ -37,6 +37,10 @@ public class Imagenes {
 	
 	/** The imagen. */
 	private BufferedImage imagen;
+	
+	boolean rotated = false;
+	
+	int counter_pixels = 0;
 
 	/** The image_path. */
 	private String image_path;
@@ -152,20 +156,36 @@ public class Imagenes {
 				}
 
 				pixel_red[ired]++;
-				if (pixel_red[ired] > maxNumSamplesRed) {
+				if (pixel_red[ired] > maxNumSamplesRed && ired != 255) {
 					maxNumSamplesRed = pixel_red[ired];
 				}
 
 				pixel_green[igreen]++;
-				if (pixel_green[igreen] > maxNumSamplesGreen) {
+				if (pixel_green[igreen] > maxNumSamplesGreen  && igreen != 255) {
 					maxNumSamplesGreen = pixel_green[igreen];
 				}
 
 				pixel_blue[iblue]++;
-				if (pixel_blue[iblue] > maxNumSamplesBlue) {
+				if (pixel_blue[iblue] > maxNumSamplesBlue  && iblue != 255) {
 					maxNumSamplesBlue = pixel_blue[iblue];
 				}
 			}
+		}
+
+		pixel_red[255] = pixel_red[255] - counter_pixels;
+		pixel_green[255] = pixel_green[255] - counter_pixels;
+		pixel_blue[255] = pixel_blue[255] - counter_pixels;
+
+		if (pixel_red[255] > maxNumSamplesRed) {
+			maxNumSamplesRed = pixel_red[255];
+		}
+
+		if (pixel_green[255] > maxNumSamplesGreen) {
+			maxNumSamplesGreen = pixel_green[255];
+		}
+
+		if (pixel_blue[255] > maxNumSamplesBlue) {
+			maxNumSamplesBlue = pixel_blue[255];
 		}
 	}
 
@@ -445,8 +465,6 @@ public class Imagenes {
 	 */
 	public void setImagen(BufferedImage imagen) {
 		this.imagen = deepCopy(imagen);
-		clearData();
-		getData();
 	}
 
 	/**
@@ -851,6 +869,14 @@ public class Imagenes {
 			}
 		}
 		return image_result;
+	}
+	
+	public void setRotated(){
+		rotated = true;
+	}
+	
+	public void addCountedPixel(int countedPixels){
+		counter_pixels = countedPixels;
 	}
 	
 }

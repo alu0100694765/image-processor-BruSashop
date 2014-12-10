@@ -54,6 +54,8 @@ public class Histograma {
 	public Histograma(Imagenes img) {
 
 		imagen = img;
+		//imagen.clearData();
+		imagen.getData();
 
 		pixel_red_histograma = img.getPixel_red().clone();
 		pixel_green_histograma = img.getPixel_green().clone();

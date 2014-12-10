@@ -1169,12 +1169,8 @@ public class Controlador {
 			SeleccionAnguloUsuario angulo = new SeleccionAnguloUsuario();
 			angulo.pedirAngulo();
 			
-			Imagenes imagen_rotada = new Imagenes();
-			
-			imagen_rotada.setImagen(manipulador.algoritmoRotacion_I(manipulador.getAcumulador_imagenes()
-					.get(manipulador.getImagen_actual()), angulo.getAngulo_()));
-			
-			manipulador.crearImagen(imagen_rotada);
+			manipulador.crearImagen(manipulador.algoritmoRotacion_I(manipulador.getAcumulador_imagenes()
+					.get(manipulador.getImagen_actual()), angulo.getAngulo_(), angulo.isSeleccion()));
 			
 			PintarImagen nueva_pintura = new PintarImagen(manipulador);
 			nueva_pintura.addWindowListenerFrame(new WindowActiveListener(
@@ -1190,12 +1186,8 @@ public class Controlador {
 			SeleccionAnguloUsuario angulo = new SeleccionAnguloUsuario();
 			angulo.pedirAngulo();
 			
-			Imagenes imagen_rotada = new Imagenes();
-			
-			imagen_rotada.setImagen(manipulador.algoritmoRotacion_D(manipulador.getAcumulador_imagenes()
-					.get(manipulador.getImagen_actual()), angulo.getAngulo_()));
-			
-			manipulador.crearImagen(imagen_rotada);
+			manipulador.crearImagen(manipulador.algoritmoRotacion_D(manipulador.getAcumulador_imagenes()
+					.get(manipulador.getImagen_actual()), angulo.getAngulo_(), angulo.isSeleccion()));
 			
 			PintarImagen nueva_pintura = new PintarImagen(manipulador);
 			nueva_pintura.addWindowListenerFrame(new WindowActiveListener(
