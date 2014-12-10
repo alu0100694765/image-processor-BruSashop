@@ -630,6 +630,15 @@ public class Imagenes {
 		imagen.setRGB(posX, posY, color.getRGB());
 	}
 	
+	public void setPixelToWhite(int posX, int posY){
+		int redConversion = 255;
+		int greenConversion = 255;
+		int blueConversion = 255;
+		
+		Color rojo = new Color(redConversion, greenConversion, blueConversion);
+		imagen.setRGB(posX, posY, rojo.getRGB());
+	}
+	
 	/**
 	 * Sets the pixel to red.
 	 *

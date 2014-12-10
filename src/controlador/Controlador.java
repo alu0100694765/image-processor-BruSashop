@@ -29,6 +29,7 @@ import vista.Perfil;
 import vista.PintarImagen;
 import vista.PlotHistograma;
 import vista.SeleccionAngulo;
+import vista.SeleccionAnguloUsuario;
 import vista.SeleccionDigitalizacion;
 import vista.SeleccionDimensiones;
 import vista.SeleccionGamma;
@@ -106,6 +107,7 @@ public class Controlador {
 		this.interfazGrafica
 				.addListenerAccionEscaladoVMP(new AccionEscaladaVMPListener());
 		this.interfazGrafica.addListenerAccionEscaladoBilinear(new AccionEscaladoBilinealListener());
+		this.interfazGrafica.addListenerRotacionUsuario(new AccionRotacionUsuarioListener());
 	}
 
 	/**
@@ -804,8 +806,6 @@ public class Controlador {
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
-
 			SeleccionUmbral umbral = new SeleccionUmbral();
 			umbral.pedirUmbral();
 
@@ -846,7 +846,6 @@ public class Controlador {
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
 			JOptionPane.showMessageDialog(interfazGrafica.frame,
 					InterfazGrafica.ACERCA_DE_MENSAJE);
 		}
@@ -874,7 +873,6 @@ public class Controlador {
 		 */
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// TODO Auto-generated method stub
 			NumeroTramos pedir_numeros = new NumeroTramos();
 			pedir_numeros.pedirNumeros();
 			TransformacionLinealesTramos sTramos = new TransformacionLinealesTramos(
@@ -915,7 +913,6 @@ public class Controlador {
 		 */
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
 			System.exit(0);
 		}
 
@@ -943,7 +940,6 @@ public class Controlador {
 		 */
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
 			@SuppressWarnings("unused")
 			Perfil perfil = new Perfil(manipulador.getAcumulador_imagenes()
 					.get(manipulador.getImagen_actual()).getImagen());
@@ -973,7 +969,6 @@ public class Controlador {
 		 */
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
 			Imagenes imagen_espejo = new Imagenes();
 			imagen_espejo.setImagen(manipulador.espejoVertical(manipulador
 					.getAcumulador_imagenes()
@@ -1009,7 +1004,6 @@ public class Controlador {
 		 */
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
 			Imagenes imagen_espejo = new Imagenes();
 			imagen_espejo.setImagen(manipulador.espejoHorizontal(manipulador
 					.getAcumulador_imagenes()
@@ -1045,7 +1039,6 @@ public class Controlador {
 		 */
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
 			Imagenes imagen_traspuesta = new Imagenes();
 			imagen_traspuesta.setImagen(manipulador
 					.traspuestaImagen(manipulador.getAcumulador_imagenes()
@@ -1081,7 +1074,6 @@ public class Controlador {
 		 */
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
 			SeleccionAngulo angulo = new SeleccionAngulo();
 			angulo.pedirAngulo();
 
@@ -1104,7 +1096,6 @@ public class Controlador {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
 			SeleccionDimensiones dimensiones = new SeleccionDimensiones();
 			dimensiones.pedirDimensiones(
 					manipulador.getAcumulador_imagenes()
@@ -1132,7 +1123,6 @@ public class Controlador {
 
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
-			// TODO Auto-generated method stub
 			SeleccionDimensiones dimensiones = new SeleccionDimensiones();
 			dimensiones.pedirDimensiones(
 					manipulador.getAcumulador_imagenes()
@@ -1149,6 +1139,27 @@ public class Controlador {
 
 			manipulador.crearImagen(imagen_escalada);
 
+			PintarImagen nueva_pintura = new PintarImagen(manipulador);
+			nueva_pintura.addWindowListenerFrame(new WindowActiveListener(
+					manipulador));
+		}
+		
+	}
+	
+	public class AccionRotacionUsuarioListener implements ActionListener{
+
+		@Override
+		public void actionPerformed(ActionEvent arg0) {
+			SeleccionAnguloUsuario angulo = new SeleccionAnguloUsuario();
+			angulo.pedirAngulo();
+			
+			Imagenes imagen_rotada = new Imagenes();
+			
+			imagen_rotada.setImagen(manipulador.algoritmoRotacion(manipulador.getAcumulador_imagenes()
+					.get(manipulador.getImagen_actual()), angulo.getAngulo_()));
+			
+			manipulador.crearImagen(imagen_rotada);
+			
 			PintarImagen nueva_pintura = new PintarImagen(manipulador);
 			nueva_pintura.addWindowListenerFrame(new WindowActiveListener(
 					manipulador));

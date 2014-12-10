@@ -791,6 +791,14 @@ public class ManipuladorImagenes {
 		return imagen_escalada;
 	}
 	
+	public BufferedImage rotacionPersonalizada(Imagenes antigua_imagen, double angulo){
+		BufferedImage imagen_rotada;
+		
+		imagen_rotada = Imagenes.deepCopy(algoritmoRotacion(antigua_imagen, angulo));
+		
+		return imagen_rotada;
+	}
+	
 	/**
 	 * Algoritmo bilinear.
 	 *
@@ -812,45 +820,46 @@ public class ManipuladorImagenes {
 		float factor_ancho = (float) ((float)new_width / (float)img.getWidth());
 		float factor_alto = (float) ((float)new_heigth / (float)img.getHeight());
 
-		// Puntos de refencia
-		int A, B, C, D, P;
-		float p, q;
-
+		float px, py;
+		
 		for (int i = 0; i < new_width; i++) {
 			for (int j = 0; j < new_heigth; j++) {
-
-				float px, py;
-				int p_x, p_y;
-
 				px = i / factor_ancho;
 				py = j / factor_alto;
-				
-				p_x = (int)px;
-				p_y = (int)py;
-				
-				if((p_x == 0 || p_x == img.getWidth() - 1) && (p_y == 0) || p_y == img.getHeight() - 1 )
-					antigua_imagen.setPixelUnitGrey(p_x, p_y, 
-							antigua_imagen.getBluePoint(p_x, p_y));
 
-				if(p_x + 1 >= img.getWidth())
-					p_x--;
-				if(p_y + 1 >= img.getHeight())
-					p_y--;
-				
-				C = antigua_imagen.getBluePoint(p_x, p_y);
-				D = antigua_imagen.getBluePoint(p_x + 1, p_y);
-				A = antigua_imagen.getBluePoint(p_x, p_y + 1);
-				B = antigua_imagen.getBluePoint(p_x + 1, p_y + 1);
-				p = px - ((int)px);
-				q = py - ((int)py);
-				
-				P = Math.round(C + ((D - C) * p) + ((A - C) * q) + ((B + C - A - D) * p * q));
-				
-				nueva_imagen.setPixelUnitGrey(i, j, P);
+				nueva_imagen.setPixelUnitGrey(i, j, colorBilineal(px, py, antigua_imagen));
 			}
 		}
 
 		return nueva_imagen.getImagen();
+	}
+	
+	public int colorBilineal(float px, float py, Imagenes antigua_imagen){
+		int p_x, p_y;
+		
+		int A, B, C, D, P;
+		float p, q;
+		
+		p_x = (int)px;
+		p_y = (int)py;
+		
+		if(p_x + 1 >= antigua_imagen.getImagen().getWidth())
+			p_x = antigua_imagen.getImagen().getWidth() - 2;
+		if(p_y + 1 >= antigua_imagen.getImagen().getHeight())
+			p_y = antigua_imagen.getImagen().getHeight() - 2;
+		
+		//System.out.println("P_X: " + p_x + ", P_Y: " + p_y);
+		
+		C = antigua_imagen.getBluePoint(p_x, p_y);
+		D = antigua_imagen.getBluePoint(p_x + 1, p_y);
+		A = antigua_imagen.getBluePoint(p_x, p_y + 1);
+		B = antigua_imagen.getBluePoint(p_x + 1, p_y + 1);
+		p = px - ((int)px);
+		q = py - ((int)py);
+		
+		P = Math.round(C + ((D - C) * p) + ((A - C) * q) + ((B + C - A - D) * p * q));
+		
+		return P;
 	}
 	
 	/**
@@ -873,30 +882,113 @@ public class ManipuladorImagenes {
 		float factor_ancho = (float) ((float)new_width / (float)img.getWidth());
 		float factor_alto = (float) ((float)new_heigth / (float)img.getHeight());
 
+		int px, py;
+		
 		for (int i = 0; i < new_width; i++) {
 			for (int j = 0; j < new_heigth; j++) {
-
-				int px, py;
-
-				// Transformacion Inversa
 				px = Math.round(i / factor_ancho);
 				py = Math.round(j / factor_alto);
 				
-				if(px >= img.getWidth())
-					px--;
-				
-				if(py >= img.getHeight())
-					py--;
-				
-				nueva_imagen.setPixelUnitGrey(i, j, 
-						antigua_imagen.getBluePoint(px, py));
-
+				nueva_imagen.setPixelUnitGrey(i, j, colorVMP(px, py, antigua_imagen));
 			}
 		}
 
 		return nueva_imagen.getImagen();
 	}
+	
+	public int colorVMP(int px, int py, Imagenes antigua_imagen){
+		if(px >= antigua_imagen.getImagen().getWidth())
+			px--;
+		
+		if(py >= antigua_imagen.getImagen().getHeight())
+			py--;
+		
+		return antigua_imagen.getBluePoint(px, py);
+	}
 
+	public BufferedImage algoritmoRotacion(Imagenes antigua_imagen, double angulo){
+		Imagenes nueva_imagen = new Imagenes();
+		
+		//Recogiendo los puntos 
+		double x, y;
+		
+		x = 0;
+		y = 0;
+		
+		double E[], F[], G[], H[];
+		
+		E = new double [2];
+		F = new double [2];
+		H = new double [2];
+		G = new double [2];
+		
+		angulo = Math.toRadians(angulo);
+		
+		E[0] = (Math.cos(angulo)*x) + (-Math.sin(angulo)*y);
+		E[1] = (Math.sin(angulo)*x) + (Math.cos(angulo)*y);
+		
+		y = antigua_imagen.getImagen().getHeight();
+
+		F[0] = (Math.cos(angulo)*x) + (-Math.sin(angulo)*y);
+		F[1] = (Math.sin(angulo)*x) + (Math.cos(angulo)*y);
+		
+		x = antigua_imagen.getImagen().getWidth();
+		y = 0;
+
+		H[0] = (Math.cos(angulo)*x) + (-Math.sin(angulo)*y);
+		H[1] = (Math.sin(angulo)*x) + (Math.cos(angulo)*y);
+		
+		x = antigua_imagen.getImagen().getWidth();
+		y = antigua_imagen.getImagen().getHeight();
+
+		G[0] = (Math.cos(angulo)*x) + (-Math.sin(angulo)*y);
+		G[1] = (Math.sin(angulo)*x) + (Math.cos(angulo)*y);
+		
+		int width, height;
+		double x_min, x_max, y_min, y_max;
+		x_min = x_max = y_min = y_max = 0;
+		
+		x_min = Math.min(E[0], Math.min(F[0], Math.min(H[0], G[0])));
+		x_max = Math.max(E[0], Math.max(F[0], Math.max(H[0], G[0])));
+		
+		y_min = Math.min(E[1], Math.min(F[1], Math.min(H[1], G[1])));
+		y_max = Math.max(E[1], Math.max(F[1], Math.max(H[1], G[1])));
+		
+		width = (int)(Math.abs(x_min) + Math.abs(x_max));
+		height = (int)(Math.abs(y_min) + Math.abs(y_max));
+		
+		nueva_imagen.setImagen(new BufferedImage(width, 
+				height, antigua_imagen.getImagen().getType()));
+		
+		float x_min_bucle = (float) x_min;
+		float y_min_bucle = (float) y_min;
+		
+		float transformada_x, transformada_y;
+		
+		for(int i = 0; i < nueva_imagen.getImagen().getWidth(); i++){
+			y_min_bucle = (float) y_min;
+			for(int j = 0; j < nueva_imagen.getImagen().getHeight(); j++){	
+				transformada_x = (float)((Math.cos(angulo)*x_min_bucle)
+						+ (Math.sin(angulo)*y_min_bucle));
+				
+				transformada_y = (float)((-Math.sin(angulo)*x_min_bucle)
+						+ (Math.cos(angulo)*y_min_bucle));
+				
+				if(transformada_x < 0 || transformada_y < 0 ||
+						transformada_x > antigua_imagen.getImagen().getWidth() ||
+						transformada_y > antigua_imagen.getImagen().getHeight())
+					nueva_imagen.setPixelToWhite(i, j);
+				else
+					nueva_imagen.setPixelUnitGrey(i, j, colorBilineal(transformada_x,
+							transformada_y, antigua_imagen));
+				
+				y_min_bucle++;
+			}
+			x_min_bucle++;
+		}
+		
+		return nueva_imagen.getImagen();
+	}
 
 	/**
 	 * Transpose.
