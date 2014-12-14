@@ -78,23 +78,31 @@ public class Perfil implements MouseListener, MouseMotionListener {
 	/** The y_points. */
 	private ArrayList<Integer> y_points;
 	
+	/** The x_derivative_points. */
 	private ArrayList<Integer> x_derivative_points;
+	
+	/** The y_derivative_points. */
 	private ArrayList<Integer> y_derivative_points;
 
 	/** The chart panel. */
 	private JPanel chartPanel;
+	
+	/** The char j panel. */
 	private JPanel charJPanel;
 	
+	/** The points. */
 	private ArrayList<Integer> points;
 	
 	/** The chart. */
 	private JFreeChart chart;
 	
+	/** The chart_derative. */
 	private JFreeChart chart_derative;
 	
 	/** The coordenadas_puntos. */
 	private double[][] coordenadas_puntos;
 	
+	/** The coordenadas_derivada. */
 	private double[][] coordenadas_derivada;
 	
 	/**
@@ -269,11 +277,16 @@ public class Perfil implements MouseListener, MouseMotionListener {
 		
 	}
 
+	/**
+	 * Gets the derivative points.
+	 *
+	 * @return the derivative points
+	 */
 	public void getDerivativePoints() {
 		for (int i = 0; i < coordenadas_puntos.length; i++) {
 			if (i ==  0) {
 				x_derivative_points.add((int) coordenadas_puntos[i][0]);
-				y_derivative_points.add((int) coordenadas_puntos[i][1]);
+				y_derivative_points.add((int) coordenadas_puntos[i][1] - (int) coordenadas_puntos[i][1]);
 			} else {
 				x_derivative_points.add((int) coordenadas_puntos[i][0]);
 				y_derivative_points.add((int) coordenadas_puntos[i][1]  - (int) coordenadas_puntos[i - 1][1]);
@@ -372,6 +385,9 @@ public class Perfil implements MouseListener, MouseMotionListener {
 		
 	}
 
+	/**
+	 * Plot derivative.
+	 */
 	public void plotDerivative() {
 		chart_derative = ChartFactory.createXYLineChart(
 				"1º Derivada", "Posicion", "Nivel de Gris",  createData(coordenadas_derivada), PlotOrientation.VERTICAL,
@@ -410,6 +426,13 @@ public class Perfil implements MouseListener, MouseMotionListener {
 		return dataset;
 	}
 		
+	/**
+	 * Creates the chart data derivative.
+	 *
+	 * @param x_points the x_points
+	 * @param y_points the y_points
+	 * @return the double[][]
+	 */
 	public double[][] createChartDataDerivative(ArrayList<Integer> x_points, ArrayList<Integer> y_points) {
 		double[][] data  = new double[x_points.size()][2];
 		
@@ -437,6 +460,7 @@ public class Perfil implements MouseListener, MouseMotionListener {
 	 *
 	 * @param x_points the x_points
 	 * @param y_points the y_points
+	 * @param points the points
 	 * @return the double[][]
 	 */
 	public double[][] createChartData(ArrayList<Integer> x_points, ArrayList<Integer> y_points, ArrayList<Integer> points) {
