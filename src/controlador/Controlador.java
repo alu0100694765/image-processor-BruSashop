@@ -148,9 +148,10 @@ public class Controlador {
 			String choosertitle = null;
 			chooser = new JFileChooser();
 			chooser.setCurrentDirectory(new java.io.File("."));
+			chooser.setFileHidingEnabled(false);
 			chooser.setDialogTitle(choosertitle);
-			chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-			chooser.setAcceptAllFileFilterUsed(false);
+			chooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+			chooser.setAcceptAllFileFilterUsed(true);
 
 			chooser.addChoosableFileFilter(new FileFilter() {
 
@@ -212,6 +213,7 @@ public class Controlador {
 
 			});
 
+			
 			String path = null;
 
 			if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
