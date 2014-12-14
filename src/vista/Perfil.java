@@ -248,6 +248,7 @@ public class Perfil implements MouseListener, MouseMotionListener {
 		// TODO Auto-generated method stub
 		if (!dragging)
 			return;
+		clearData();
 		gc.drawLine(startX, startY, prevX, prevY);
 		int endX = evt.getX();
 		int endY = evt.getY();
@@ -265,8 +266,6 @@ public class Perfil implements MouseListener, MouseMotionListener {
 		plotCoord();
 		plotDerivative();
 		gc.dispose();
-		
-		
 		
 	}
 
@@ -459,6 +458,17 @@ public class Perfil implements MouseListener, MouseMotionListener {
 			i++;
 		}
 		return data;
+	}
+	
+	/**
+	 * Clear data.
+	 */
+	public void clearData() {
+		points.clear();
+		x_points.clear();
+		y_points.clear();
+		x_derivative_points.clear();
+		y_derivative_points.clear();
 	}
 	
 }
