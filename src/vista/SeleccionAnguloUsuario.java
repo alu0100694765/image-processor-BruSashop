@@ -10,7 +10,7 @@ import javax.swing.JTextField;
 
 public class SeleccionAnguloUsuario {
 	
-	private final static String[] INTERPOLACION = {"Interpolaci\u00f3n VMP", "Interpolaci\u00f3n Bilineal"};
+	private final static String[] INTERPOLACION = {"Interpolacion VMP", "Interpolacion Bilineal"};
 	/** The panel. */
 	JPanel panel;
 	
@@ -60,7 +60,7 @@ public class SeleccionAnguloUsuario {
 		if (selectionUmbral == JOptionPane.OK_OPTION
 				&& (angulo.getText().matches("\\d+"))) {
 			angulo_ = Integer.valueOf(angulo.getText());
-			if(interp_box.getSelectedItem().toString().matches("Interpolaci�n Bilineal"))
+			if(interp_box.getSelectedItem().toString().matches("Interpolacion Bilineal"))
 				seleccion = true;
 		}
 

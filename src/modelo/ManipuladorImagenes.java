@@ -978,12 +978,15 @@ public class ManipuladorImagenes {
 					countedPixels++;
 				}
 				else{
-					if(interp)
+					if(interp){
 						nueva_imagen.setPixelUnitGrey(i, j, colorBilineal(transformada_x,
 								transformada_y, antigua_imagen));
-					else
+					}
+						
+					else{
 						nueva_imagen.setPixelUnitGrey(i, j, colorVMP(Math.round(transformada_x),
 								Math.round(transformada_y), antigua_imagen));
+					}
 				}
 				
 				y_min_bucle++;
