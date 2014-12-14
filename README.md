@@ -19,10 +19,19 @@ Este proyecto se va a distribuir con una licencia GNU.
 - Operaciones lineales:
 	- Transformaciones lineales por tramos.
 	- Brillo y contraste.
-- Implementar las operaciones no lineales:
+- Operaciones no lineales:
 	- Ecualización del histograma.
 	- Especificación del histograma.
     - Corrección Gamma.
+- Rotaciones:
+    - Espejo vertical.
+    - Espejo horizontal.
+    - Rotación empleando múltiplos de 90º.
+    - Rotación personalizada directa.
+    - Rotación personalizada indirecta.
+- Escalados:
+    - Escalado usando el algoritmo VMP(Vecino más próximo).
+    - Escalado usando el algoritmo Bilineal.
 - Monocromo.
 - Región de Interés.
 - Diferencia de Imágenes.
@@ -35,3 +44,4 @@ Java es un lenguaje de programación de propósito general, concurrente, orientado
 ## Librerías Externas.
 * [JFreechart](http://www.jfree.org/jfreechart/)
 * [JCommon](http://www.jfree.org/jfreechart/)
+* [Look and Feel](http://www.jtattoo.net/index.html)
