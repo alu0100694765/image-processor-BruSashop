@@ -100,7 +100,7 @@ public class InterfazGrafica {
 	public final static String TFT = "Transformaciones Lineales a Tramos";
 	
 	/** The Constant ACERCA_DE_MENSAJE. */
-	public final static String ACERCA_DE_MENSAJE = "<html>BruSashop<br>Versi�n: 1.0<br>Autores: Sawan J Kapai Harpalani & Bruno Alessio Bibb�<br>Asignatura: Visi�n por Computador.<br>Grado en Ingener�a Inform�tica, Universidad La Laguna</html>";
+	public final static String ACERCA_DE_MENSAJE = "<html>BruSashop<br>Versi&oacute;n: 1.0<br>Autores: Sawan J Kapai Harpalani & Bruno Alessio Bibb&oacute;<br>Asignatura: Visi&oacute;n por Computador.<br>Grado en Ingener&iacute;a Inform&aacute;tica, Universidad La Laguna</html>";
 	
 	/** The Constant ESPEJO_V. */
 	public final static String ESPEJO_V = "Espejo vertical";
